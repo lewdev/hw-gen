@@ -1,0 +1,26 @@
+body { font-size: 2.3rem; }
+.my-table > tbody > tr > td { border-top: 0; }
+.inline-equation {
+  width: 16rem;
+  text-align: right;
+}
+.equation {
+  width: 6rem;
+  text-align: right;
+}
+.number { width: 2rem; text-align: right; }
+.answer { width: 5rem; }
+.text-input { border: 0px; border-bottom: 3px solid black; }
+.answer-input { 
+  border: 0px;
+  border-top: 3px solid black;
+  width: 6rem;
+  text-align: right;
+}
+.answer-input-d { 
+  border: 0px;
+  border-bottom: 2px solid black;
+  width: 6rem;
+  text-align: right;
+}
+@media print { .no-print { display: none; } }

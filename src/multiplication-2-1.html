@@ -1,41 +1,24 @@
 <!doctype html><html><head><meta charset="utf-8">
-<title>Random 1 to 2-digit Muliplication Equations | HW Gen</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="All possible combination of single-digit multiplication equations not including 1 nor 0.">
-<meta name="author" content="Lewis Nakao">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-<style>
-body { font-size: 2.3rem; }
-.my-table > tbody > tr > td { border-top: 0; }
-.equation {
-  width: 6rem;
-  text-align: right;
-}
-.number { width: 2rem; text-align: right; }
-.answer { width: 5rem; }
-.text-input { border: 0px; border-bottom: 2px solid black; }
-.answer-input { 
-  border: 0px;
-  border-top: 2px solid black;
-  width: 6rem;
-  text-align: right;
-}
-@media print { .no-print { display: none; } }
-</style>
+  <title>Random 1 to 2-digit Muliplication Equations | HW Gen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="All possible combination of single-digit multiplication equations not including 1 nor 0.">
+  <meta name="author" content="Lewis Nakao">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<table class="table my-table"><tbody><tr>
-<td class="pt-0"><small class="text-muted font-italics">Name <input type="text" class="text-input"/></small></td>
-<td align="right" class="pt-0"><small class="text-muted font-italics">Date <input type="text" class="text-input"/></small></td>
-</tr></tbody></table>
-<div class="mb-2">
-<h1>Random 1 to 2-digit Muliplication Equations</h1>
-<small></small>
-</div>
-<table class="table my-table"><tbody id="output"></tbody></table>
-<div class="text-center no-print">
-  <button class="btn btn-secondary" onclick="window.print();">Print</button>
-</div>
+  <table class="table my-table"><tbody><tr>
+  <td class="pt-0"><small class="text-muted font-italics">Name <input type="text" class="text-input"/></small></td>
+  <td align="right" class="pt-0"><small class="text-muted font-italics">Date <input type="text" class="text-input"/></small></td>
+  </tr></tbody></table>
+  <div class="mb-2">
+  <h1>Random 1 to 2-digit Muliplication Equations</h1>
+  <small></small>
+  </div>
+  <table class="table my-table"><tbody id="output"></tbody></table>
+  <div class="text-center no-print">
+    <button class="btn btn-secondary" onclick="window.print();">Print</button>
+  </div>
 <script>
 window.onload = () => {
   const output = document.getElementById("output")
@@ -73,5 +56,4 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 ga('create', 'UA-2833478-13', 'auto');
 ga('send', 'pageview');
-</script>
-</body></html>
+</script></body></html>
