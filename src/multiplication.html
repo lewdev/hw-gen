@@ -1,0 +1,59 @@
+<!doctype html><html><head><meta charset="utf-8">
+<title>Random Muliplication Equations | HW Gen</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="All possible combination of single-digit multiplication equations not including 1 nor 0.">
+<meta name="author" content="Lewis Nakao">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<style>
+body { font-size: 2.3rem; }
+.my-table > tbody > tr > td { border-top: 0; }
+.equation {
+  width: 12rem;
+  text-align: right;
+}
+.answer { width: 5rem; }
+input[type="text"] { border: 0px; border-bottom: 2px solid black; }
+.answer-input { width: 5rem; text-align: center; }
+@media print { .no-print { display: none; } }
+</style>
+</head>
+<body>
+<table class="table my-table"><tbody><tr>
+<td class="pt-0"><small class="text-muted font-italics">Name <input type="text" class="text-input"/></small></td>
+<td align="right" class="pt-0"><small class="text-muted font-italics">Date <input type="text" class="text-input"/></small></td>
+</tr></tbody></table>
+<div class="mb-2">
+<h1>Random Multiplication Equations</h1>
+<small>All possible combination of single-digit multiplication equations not including 1 nor 0. Hit the refresh button to get them in a new random order.</small>
+</div>
+<table class="table my-table"><tbody id="output"></tbody></table>
+<div class="text-center no-print">
+  <button class="btn btn-secondary" onclick="window.print();">Print</button>
+</div>
+<script>
+window.onload = () => {
+  const output = document.getElementById("output")
+    , arr = []
+    , numArr = [2,3,4,5,6,7,8,9]
+    , COL_COUNT = 3;
+  ;
+  //build array
+  numArr.map(i => numArr.map(j => arr.push({ i, j, s: i * j })));
+  arr.sort(() => Math.random() - 0.5);//shuffle
+  const outputStr = arr.map((a, i) => `
+  <td class="equation"><small class="text-muted font-italics mr-2">${i + 1}.</small>
+  ${a.i} &times; ${a.j} = </td><td class="answer"><input type="text" class="answer-input"/></td>
+  ${((i + 1) % COL_COUNT) === 0 ? '</tr><tr>' : ''}
+`).join("");
+  console.log(outputStr);
+  output.innerHTML = '<tr>' + outputStr + '</tr>';
+};
+
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-2833478-13', 'auto');
+ga('send', 'pageview');
+</script>
+</body></html>

@@ -1,0 +1,44 @@
+<!doctype html><html><head><meta charset="utf-8">
+<title>Random Math Homework Generator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="Automatically generate new random print-friendly homework worksheets for math practice.">
+<meta name="author" content="Lewis Nakao">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body class="bg-light">
+<div class="container">
+  <h1>Random Math Homework Generator</h1>
+  <p><strong>HW Gen</strong> will automatically generate new random print-friendly homework worksheets for math practice. Just click on a link to view the homework. Hit refresh to get a new set.</p>
+  <h4>Features</h4>
+  <ul>
+    <li>Free</li>
+    <li>Print-friendly</li>
+    <li>Answers can be filled and then printed too.</li>
+  </ul>
+  <table class="table"><tbody id="output">
+  </tbody></table>
+  <div class="text-center text-muted">
+    Author: <a href="http://lewdev.github.io">Lewis Nakao</a>
+</div>
+<script type="text/javascript">
+window.onload = () => {
+  const output = document.getElementById("output")
+    , arr = []
+  ;
+  output.innerHTML = data.map((a, i) => `<tr>
+    <td>${i + 1}. <a href="${a.file}" target="_blank">${a.title}</a></td>
+  </tr>`).join("");
+};
+const data = [
+  { file: "multiplication.html", title: "Random Single-digit Multiplication" },
+  { file: "multiplication-2-1.html", title: "Random 2 to 1-digit Multiplication" },
+  { file: "multiplication-2-2.html", title: "Random 2 to 2-digit Multiplication" },
+];
+
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-2833478-13', 'auto');
+ga('send', 'pageview');
+</script></body></html>
