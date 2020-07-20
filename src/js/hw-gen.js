@@ -8,7 +8,6 @@ const randRangeByDigits = (digits, noOnes = false) => {
   if (noOnes && digits === 1) return randNoOnes();
   const start = Math.pow(10, digits - 1);
   const end = Math.pow(10, digits) - 1;
-  console.log({start, end})
   return randRange(start, end);
 };
 const solution = (x, y, mathSymbol) => {

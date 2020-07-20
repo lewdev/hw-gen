@@ -4,7 +4,7 @@ body {
 }
 body.main {
   font-size: 1rem;
-  margin: .5rem;
+  margin-bottom: 5rem;
 }
 #answerKeyCbx { width: .7rem; height: .7rem; }
 .my-table > tbody > tr > td { border-top: 0; }
