@@ -1,4 +1,12 @@
-body { font-size: 2.3rem; }
+body {
+  font-size: 2.3rem;
+  margin: 1.5rem;
+}
+body.main {
+  font-size: 1rem;
+  margin: .5rem;
+}
+#answerKeyCbx { width: .7rem; height: .7rem; }
 .my-table > tbody > tr > td { border-top: 0; }
 .inline-equation {
   width: 16rem;
@@ -8,7 +16,18 @@ body { font-size: 2.3rem; }
   width: 6rem;
   text-align: right;
 }
-.number { width: 2rem; text-align: right; }
+.example > td .number { display: none; }
+.example > td { border: 0; text-align: right; }
+.example > td .equation { width: 3rem !important; }
+.example > td.pb-5 { padding-bottom: 0 !important; padding-top: 0; }
+.example .answer-input-d, .example .answer-input { width: 2rem; }
+
+.number {
+  font-size: 1.5rem;
+  width: 2rem;
+  text-align: right;
+  margin-right: 1rem;
+}
 .answer { width: 5rem; }
 .text-input { border: 0px; border-bottom: 3px solid black; }
 .answer-input { 
@@ -20,7 +39,17 @@ body { font-size: 2.3rem; }
 .answer-input-d { 
   border: 0px;
   border-bottom: 2px solid black;
-  width: 6rem;
-  text-align: right;
+  width: 5rem;
+  text-align: center;
 }
-@media print { .no-print { display: none; } }
+.answer-key-table {
+  font-size: 12px;
+}
+.answer-key {
+  width: 4rem;
+  display: inline-block;
+}
+@media print {
+  .no-print { display: none; }
+  body { margin: 0;}
+}
