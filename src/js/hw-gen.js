@@ -49,16 +49,19 @@ const HwGen = (() => {
         </td>
         </tr>`}).join("");
     }).join("");
+    document.title = "HW Gen: Math Homework Generator";
   };
   const renderWorksheet = () => {
     const worksheetsDiv = document.querySelector(".worksheets")
       , answerKeyDiv = document.querySelector(".answerKey")
       , hwSetInfoDiv = document.querySelector(".hw-set-info")
       , worksheetOrig = document.querySelector(".worksheet").cloneNode(true)
+      , worksheetCountSelect = document.getElementById("worksheetCount")
       , hwSet = hwSets[selectedSet]
       , allAnswerKeys = []
       , { title, count, columns, xSize, ySize, mathSymbol, outputFunc, answerKey } = hwSet
     ;
+    worksheetCount = worksheetCountSelect ? parseInt(worksheetCountSelect.value) : 1
     worksheetsDiv.innerHTML = "";
     for (let i = 0; i < worksheetCount; i++) {
       const worksheet = worksheetOrig.cloneNode(true)
@@ -78,7 +81,7 @@ const HwGen = (() => {
     }
     hwSetInfoDiv.innerHTML = `${worksheetCount} worksheets *Answer key on last page.`;
     answerKeyDiv.innerHTML = allAnswerKeys.join("");
-    document.title = hwSet ? title : "HW Gen: Math Homework Generator";
+    document.title = title;
   };
   const init = () => {
     selectedSet = getUrlParam("set");
