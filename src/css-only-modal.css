@@ -1,0 +1,58 @@
+/* CSS only Modal
+Source: https://codepen.io/timothylong/pen/HhAer/ */
+.modal-window {
+  position: fixed;
+  background-color: rgba(255, 255, 255, 0.25);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+  background-color: rgba(0,0,0,0.5);
+}
+.modal-window:target {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-window > div {
+  width: 90%;
+  height: 90%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  padding: 1.5em;
+  background: #ffffff;
+  color: #333333;
+  -moz-box-shadow: 5px 5px 5px 0px #696969;
+  -webkit-box-shadow: 5px 5px 5px 0px #696969;
+  box-shadow: 5px 5px 5px 0px #696969;
+  overflow: auto;
+}
+.modal-window header {
+  font-weight: bold;
+}
+.modal-window h1 {
+  font-size: 150%;
+  margin: 0 0 15px;
+  color: #333333;
+}
+
+.modal-close {
+  color: #aaa;
+  line-height: 3em;
+  width: 3em;
+  font-size: 80%;
+  text-align: center;
+  text-decoration: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.modal-close:hover {
+  color: #000;
+}

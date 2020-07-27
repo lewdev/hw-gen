@@ -1,73 +1,129 @@
-
-const rand = max => Math.floor(Math.random() * max);
-const randRange = (min, max) => rand(max - min) + min;
-const randArr = arr => arr[rand(arr.length)];
-const singleDigits = [2,3,4,5,6,7,8,9];
-const randNoOnes = () => randArr(singleDigits);
-const randRangeByDigits = (digits, noOnes = false) => {
-  if (noOnes && digits === 1) return randNoOnes();
-  const start = Math.pow(10, digits - 1);
-  const end = Math.pow(10, digits) - 1;
-  return randRange(start, end);
-};
-const solution = (x, y, mathSymbol) => {
-  switch (mathSymbol) {
-    case "*": return x * y;
-    case "/": return x / y;
-    case "-": return x - y;
-    default: return x + y;
-  }
-};
-const getUrlParam = param => {
-  const paramMap = {};
-  const urlArr = document.location.href.split("?");
-  const queryParam = urlArr.length > 1 ? urlArr[1] : false;
-  if (queryParam) {
-    var paramArr = queryParam.split("&");
-    paramArr.map(paramSet => {
-      if (paramSet.indexOf(param + "=") === 0) {
-        paramMap[param] = paramSet.split("=")[1].replace(/%20/g, " ");
-      }
-    });
-  }
-  return paramMap[param] || false;
-};
-const genEquation = (xSize, ySize, mathSymbol, noOnes = false) => {
-  const x = randRangeByDigits(xSize, noOnes);
-  const y = randRangeByDigits(ySize, noOnes);
-  const z = solution(x, y, mathSymbol);
-  return { x, y, z };
-};
-const generate = (xSize, ySize, mathSymbol, count) => {
-  const arr = [];
-  if (xSize === 1 && ySize === 1) {
-    singleDigits.map(x => singleDigits.map(y => arr.push({ x, y, z: solution(x, y, mathSymbol) })));
-    arr.sort(() => Math.random() - 0.5); //shuffle
-    arr.sort(() => Math.random() - 0.5); //shuffle
-  }
-  else {
-    for (let i = 0; i < count; i++) {
-      arr.push(genEquation(xSize, ySize, mathSymbol));
+const HwGen = (() => {
+  const MODE = { MAIN: 1, WORKSHEET: 2 };
+  const worksheetView = document.getElementById("worksheetView");
+  const mainView = document.getElementById("mainView");
+  const hwMap = {};
+  let mode = MODE.MAIN;
+  let selectedSet = "";
+  let worksheetCount = 1;
+  const genEquation = (xSize, ySize, mathSymbol) => {
+    const x = randRangeByDigits(xSize);
+    const y = randRangeByDigits(ySize);
+    const z = solution(x, y, mathSymbol);
+    return { x, y, z };
+  };
+  const generate = (xSize, ySize, mathSymbol, count) => {
+    const arr = [];
+    if (xSize === 1 && ySize === 1) {
+      singleDigits.map(x => singleDigits.map(y => arr.push({ x, y, z: solution(x, y, mathSymbol) })));
+      arr.sort(() => Math.random() - 0.5); //shuffle
+      arr.sort(() => Math.random() - 0.5); //shuffle
     }
+    else {
+      for (let i = 0; i < count; i++) {
+        arr.push(genEquation(xSize, ySize, mathSymbol));
+      }
+    }
+    return arr;
+  };
+  const renderMain = () => {
+    const output = document.getElementById("output");
+    const worksheetCountSelect = document.getElementById("worksheetCount");
+    const worksheetCount = worksheetCountSelect ? parseInt(worksheetCountSelect.value) : 1;
+    output.innerHTML = Object.keys(hwMap).map(cat => {
+      return `<tr><td colspan="4" class="text-light bg-secondary"><h4 class="mb-0">${cat}</h4></td></tr>` + hwMap[cat].map((hwSet, i) => {
+        const {title, xSize, ySize, mathSymbol, outputFunc, count, name} = hwSet;
+        const eq = genEquation(xSize, ySize, mathSymbol);
+        const eqStr = outputFunc(eq, -1, 0);
+        return `<tr>
+        <td class="text-right pr-0 text-sm">
+          <span class="mr-2 number">${i + 1}.</span>
+        </td>
+        <td>
+          <a href="./?set=${name}&worksheets=${worksheetCount}" onclick="HwGen.setWs('${name}', ${worksheetCount}); return false;">${title}</a>
+          <div>${xSize === 1 && ySize === 1 ? 64 : count} Problems</div.
+        </td>
+        <td>e.g.</td>
+        <td style="width:10rem;">
+          <table class="w-50"><tbody><tr class="example">${eqStr}</tr></tbody></table>
+        </td>
+        </tr>`}).join("");
+    }).join("");
+  };
+  const renderWorksheet = () => {
+    const worksheetsDiv = document.querySelector(".worksheets")
+      , answerKeyDiv = document.querySelector(".answerKey")
+      , hwSetInfoDiv = document.querySelector(".hw-set-info")
+      , worksheetOrig = document.querySelector(".worksheet").cloneNode(true)
+      , hwSet = hwSets[selectedSet]
+      , allAnswerKeys = []
+      , { title, count, columns, xSize, ySize, mathSymbol, outputFunc, answerKey } = hwSet
+    ;
+    worksheetsDiv.innerHTML = "";
+    for (let i = 0; i < worksheetCount; i++) {
+      const worksheet = worksheetOrig.cloneNode(true)
+        , output = worksheet.querySelector(".output")
+        , arr = generate(xSize, ySize, mathSymbol, count)
+        , titleDiv = worksheet.querySelector(".title")
+        , outputStr = arr.map((eq, i) => outputFunc(eq, i, columns)).join("")
+        , emoji = randArr(emojis)
+      ;
+      allAnswerKeys.push(`<div class="answer-key-table col-4">
+        <div class="font-weight-bold">${emoji} ${title} #${i + 1}</div>
+        <div class="row">${arr.map(answerKey).map((a, i) => 
+      `<div class="text-nowrap col-${Math.floor(12 / columns)}">${i + 1}.) ${a}</div>`).join("")}</div></div>`);
+      titleDiv.innerHTML = `${emoji} ${title} #${i + 1}`;
+      output.innerHTML = '<tr>' + outputStr + '</tr>';
+      worksheetsDiv.appendChild(worksheet);
+    }
+    hwSetInfoDiv.innerHTML = `${worksheetCount} worksheets *Answer key on last page.`;
+    answerKeyDiv.innerHTML = allAnswerKeys.join("");
+    document.title = hwSet ? title : "HW Gen: Math Homework Generator";
+  };
+  const init = () => {
+    selectedSet = getUrlParam("set");
+    worksheetCount = parseInt(getUrlParam("worksheets")) || 3;
+    if (selectedSet) {
+      mode = MODE.WORKSHEET;
+    }
+    //map sets by Category.
+    Object.keys(hwSets).map(a => {
+      const hwSet = hwSets[a];
+      if (!hwSet.category) alert(`"${a}" does not have a category!`);
+      hwSet.name = a;
+      if (!hwMap[hwSet.category]) {
+        hwMap[hwSet.category] = [];
+      }
+      hwMap[hwSet.category].push(hwSet);
+    });
+    HwGen.render();
   }
-  return arr;
-};
-window.onload = () => {
-  const setName = getUrlParam("set") || "addition"
-    //, copies = getUrlParam("copies") || 1
-    , showAnswerKey = getUrlParam("showAnswerKey") || false
-    , output = document.getElementById("output")
-    , answerKey = document.getElementById("answerKey")
-    , titleDiv = document.getElementById("title")
-    , hwSet = hwSets[setName]
-    , { title, count, columns, xSize, ySize, mathSymbol, outputFunc, noOnes } = hwSet
-    , arr = generate(xSize, ySize, mathSymbol, count, noOnes)
-    , outputStr = arr.map((eq, i) => outputFunc(eq, i, columns)).join("")
-    , answersStr = showAnswerKey ? '<div class="answer-key-table">' + arr.map(hwSet.answerKey).map((a, i) => 
-      `<span class="answer-key">${i + 1}.) ${a}</span>`).join("") + '</div>' : ''
-  ;
-  document.title = title;
-  titleDiv.innerHTML = title;
-  output.innerHTML = '<tr>' + outputStr + '</tr>';
-  answerKey.innerHTML = answersStr;
-};
+  window.onload = init;
+  return {
+    render: () => {
+      mainView.style.display = mode === MODE.MAIN ? "" : "none";
+      worksheetView.style.display = mode === MODE.WORKSHEET ? "" : "none";
+      switch (mode) {
+        case MODE.WORKSHEET: renderWorksheet(); break;
+        case MODE.MAIN:
+        default: renderMain();
+      }
+      window.scrollTo(0, 0);
+      twemoji.parse(document.body);
+    },
+    setWs: (hwSetName, worksheetCount) => {
+      if (hwSetName) {
+        setUrlParam(`set=${hwSetName}&worksheets=${worksheetCount}`);
+        mode = MODE.WORKSHEET;
+        selectedSet = hwSetName;
+      }
+      else {
+        mode = MODE.MAIN;
+        selectedSet = "";
+        setUrlParam("");
+      }
+      HwGen.render();
+      return false;
+    }
+  };
+})();

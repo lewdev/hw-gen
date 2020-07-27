@@ -1,34 +1,157 @@
 <!doctype html><html><head><meta charset="utf-8">
-  <title>Random Math Homework Generator</title>
+  <title>HW Gen: Math Homework Generator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Automatically generate new random print-friendly homework worksheets for math practice.">
   <meta name="author" content="Lewis Nakao">
+  <meta itemprop="image" content="https://lewdev.github.io/apps/hw-gen/img/math-hw-gen.jpg">
+  <!-- favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apps/hw-gen/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/apps/hw-gen/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/apps/hw-gen/icons/favicon-16x16.png">
+  <link rel="manifest" href="/apps/hw-gen/icons/site.webmanifest">
+  <link rel="mask-icon" href="/apps/hw-gen/icons/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="/apps/hw-gen/icons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-config" content="/apps/hw-gen/icons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="📝 Math Homework Generator">
+  <meta name="twitter:description" content="Automatically generate new random print-friendly homework worksheets for math practice.">
+  <meta name="twitter:site" content="@lewdev">
+  <meta name="twitter:creator" content="@lewdev">
+  <meta name="twitter:image" content="https://lewdev.github.io/apps/hw-gen/img/math-hw-gen.jpg">
+  <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+  <meta property="og:title" content="📝 Math Homework Generator">
+  <meta property="og:description" content="Automatically generate new random print-friendly homework worksheets for math practice.">
+  <meta property="og:url" content="https://lewdev.github.io/apps/hw-gen/">
+  <meta property="og:site_name" content="📝 Math Homework Generator">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://lewdev.github.io/apps/hw-gen/img/math-hw-gen.jpg">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="css-only-modal.css">
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-light main">
-<div class="container">
-  <h1>Random Math Homework Generator</h1>
-  <p><strong>HW Gen</strong> will automatically generate new random print-friendly homework worksheets for math practice. Just click on a link to view the homework. Hit refresh to get a new set.</p>
-  <h4>Features</h4>
-  <ul>
-    <li>Free</li>
-    <li>Print-friendly</li>
-    <li>Answers can be filled and then printed too.</li>
-    <li>Open source (<a href="https://github.com/lewdev/hw-gen">See source code</a>)</li>
-  </ul>
-  <label class="d-block">
-    <div class="d-inline-block">
-      <input id="answerKeyCbx" type="checkbox" class="form-control" checked
-        onclick="toggleAnswerKey(this)"/>
+<body>
+  <div id="mainView" class="container">
+    <h1><img src="icons/favicon-32x32.png"/> Math Homework Generator</h1>
+    <p><strong>HW Gen</strong> will automatically generate new random print-friendly homework worksheets for math practice. <a href="#about">More Info</a></p>
+    <div class="row">
+      <div class="col-md-6">
+        <h4>Tips</h4>
+        <ul>
+          <li>Use Print Preview feature and set "Zoom" to "Shrink to fit" to ensure best print results.</li>
+          <li>Adjust settings such as margin size to 0.3" optimize print output.</li>
+          <li>Adjust "Worksheets" value to get more worksheets per set of print outs. All answer keys will be printed on the last page.</li>
+        </ul>
+      </div>
+      <div class="col-md-6">
+        <h4>Features</h4>
+        <ul>
+          <li>Free</li>
+          <li>Print-friendly</li>
+          <li>Answer key on last page.</li>
+          <li>Open source (<a href="https://github.com/lewdev/hw-gen">See source code</a>)</li>
+          <li>1-digit equations are all possible equations not including 1.</li>
+          <li>Random emojis using <a href="https://twemoji.twitter.com">Twemoji</a> featured on each worksheet in case worksheets mix up.</li>
+        </ul>
+      </div>
     </div>
-    <div class="d-inline-block">Include Answer Key</div>
-  </label>
-  <table class="table"><tbody id="output"></tbody></table>
-  <div class="text-center text-muted">
-    Author: <a href="https://lewdev.github.io">Lewis Nakao</a>
+    <label class="d-block">
+      <div class="d-inline-block">
+        <select id="worksheetCount" class="form-control" onchange="HwGen.render()">
+          <option>1</option>
+          <option>2</option>
+          <option selected>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>10</option>
+          <option>20</option>
+        </select>
+      </div>
+      <div class="d-inline-block"> Worksheets</div>
+    </label>
+    <table class="table"><tbody id="output"></tbody></table>
+    <div class="text-center text-muted">
+      Author: <a href="https://lewdev.github.io">Lewis Nakao</a>
+    </div>
   </div>
+  <div id="worksheetView" style="display: none;">
+    <div class="row no-print" style="margin-top:-1rem;">
+      <div class="col-3">
+        <button class="btn btn-secondary" onclick="HwGen.setWs('');">◀️ Back</button>
+      </div>
+      <div class="col-6 text-center hw-set-info"></div>
+      <div class="col-3 text-right">
+        <button class="btn btn-secondary" onclick="window.print();">🖨️ Print</button>
+      </div>
+    </div>
+    <div class="worksheets">
+      <div class="worksheet">
+        <table class="table my-table"><tbody><tr>
+          <td class="text-muted font-italics text-nowrap"><img src="icons/favicon-32x32.png"/> Name</td>
+          <td><input type="text" class="text-input w-100"/></td>
+          <td class="text-muted font-italics">Date</td>
+          <td><input type="text" class="text-input w-100"/></td>
+        </tr></tbody></table>
+        <div class="mb-2">
+          <h1 class="title"></h1>
+        </div>
+        <table class="table my-table"><tbody class="output"></tbody></table>
+        <div class="page-break"></div>
+      </div>
+    </div>
+    <div class="answerKey row"></div>
+  </div>
+  <div id="about" class="modal-window no-print">
+    <div>
+      <a href="#" title="Close" class="modal-close">&#10006;</a>
+      <div class="p-3">
+        <p class="text-center">
+          <a href="#image-modal" title="View Enlarged" class="text-center d-block">
+            <img src="img/math-hw-gen.jpg" class="img-fluid rounded my-img">
+          </a>
+        </p>
+        <h3>What is this?</h3>
+        <p>A math homework generator that I initially wanted to be simple for my daughter, but I wanted
+          more features and it might continue to grow.</p>
+        <h3>Why?</h3>
+        <p>I just wanted some simple equations for her to practice multiplication since I started teaching her.</p>
+        <p>Now it's become a mission to be something better or at least different from what else is out there.</p>
+        <p>I have discovered several other math homework generators, while some were very good, it didn't 
+          everything I wanted it to do. So I feel like I should continue to build upon it.</p>
+        <h3>Author: Lewis Nakao</h3>
+        <p>I am a software engineer in Hawaii.</p>
+        <div class="row">
+          <div class="col-6">
+            <a href="https://drive.google.com/open?id=1neZuwiGy5SBrFOiJnbcvcx1Bb-LV8iPP" target="_blank">
+              <i class="fas fa-file-alt"></i> My resume (pdf)
+            </a>
+          </div>
+          <div class="col-6">
+            <a href="https://www.linkedin.com/in/lewisnakao/" target="_blank">
+              <i class="fab fa-linkedin"></i> LinkedIn Profile
+            </a>
+          </div>
+          <div class="col-6">
+            <a href="https://www.facebook.com/lewdev" target="_blank">
+              <i class="fab fa-facebook-square"></i> Facebook Profile
+            </a>
+          </div>
+          <div class="col-6">
+            <a href="https://github.com/lewdev" target="_blank">
+              <i class="fab fa-github-square"></i> Github Profile
+            </a>
+          </div>
+        </div>
+        <p>Libraries Used: <a href="https://fontawesome.com/">Font Awesome</a>, Bootstrap, Twemoji.</p>
+      </div>
+    </div>
+  </div>
+<script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
+<script src="js/util.js"></script>
 <script src="js/hw-gen.js"></script>
 <script src="js/hw-sets.js"></script>
-<script src="js/index.js"></script>
 <script src="js/google-analytics.js" type="text/javascipt"></script></body></html>

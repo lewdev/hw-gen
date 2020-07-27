@@ -1,16 +1,25 @@
-body {
-  font-size: 2.3rem;
-  margin: 1.5rem;
+
+.page-break { page-break-after: always; }
+body { margin: 1.5rem; }
+.worksheets { font-size: 2rem; }
+.number {
+  font-size: 1.5rem;
+  width: 2rem;
+  text-align: right;
+  margin-right: 1rem;
 }
-body.main {
-  font-size: 1rem;
-  margin-bottom: 5rem;
+img.emoji {
+  height: 1em;
+  width: 1em;
+  margin: 0 .05rem 0.25rem .1rem;
 }
 #answerKeyCbx { width: .7rem; height: .7rem; }
 .my-table > tbody > tr > td { border-top: 0; }
-.inline-equation {
-  width: 16rem;
-  text-align: right;
+.table > tbody > tr:last-child { 
+  border-bottom: 1px solid #dee2e6;
+}
+.my-table.table > tbody > tr:last-child { 
+  border-bottom: 0;
 }
 .equation {
   width: 6rem;
@@ -21,35 +30,32 @@ body.main {
 .example > td .equation { width: 3rem !important; }
 .example > td.pb-5 { padding-bottom: 0 !important; padding-top: 0; }
 .example .answer-input-d, .example .answer-input { width: 2rem; }
-
-.number {
-  font-size: 1.5rem;
-  width: 2rem;
-  text-align: right;
-  margin-right: 1rem;
-}
 .answer { width: 5rem; }
 .text-input { border: 0px; border-bottom: 3px solid black; }
 .answer-input { 
   border: 0px;
   border-top: 3px solid black;
-  width: 6rem;
+  width: 5rem;
   text-align: right;
 }
-.answer-input-d { 
-  border: 0px;
-  border-bottom: 2px solid black;
-  width: 5rem;
+.answer-input.down {
+  border-top: 0;
+  border-bottom: 3px solid black;
   text-align: center;
 }
-.answer-key-table {
-  font-size: 12px;
-}
-.answer-key {
-  width: 4rem;
-  display: inline-block;
-}
+.answer-key-table { font-size: 16px; border: 3px solid gray; }
+.answer-key { width: 5rem; display: inline-block; }
 @media print {
   .no-print { display: none; }
-  body { margin: 0;}
+  body { margin: 0; font-size: 4px; }
+}
+
+@media (min-width: 500px) {
+  .my-img { width: 80%; }
+}
+@media (min-width: 800px) {
+  .my-img { width: 60%; }
+}
+@media (min-width: 1200px) {
+  .my-img { width: 40%; }
 }
