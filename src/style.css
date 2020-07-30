@@ -50,13 +50,14 @@ tr.long > td > div.equation > .answer-input { width: 6rem; }
 }
 .answer-key-table { font-size: 16px; border: 1px solid gray; }
 .answer-key { width: 5rem; display: inline-block; }
+.worksheets-view-panel { margin-top: -1rem; }
 @media print {
   .no-print { display: none; }
   body { margin: 0; font-size: 4px; }
 }
-
 @media (max-width: 500px) {
   body { margin: .3rem; }
+  .worksheets-view-panel { margin-top: 0; }
 }
 @media (min-width: 500px) {
   .my-img { width: 80%; }
