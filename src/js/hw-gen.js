@@ -32,9 +32,9 @@ const HwGen = (() => {
     const worksheetCount = worksheetCountSelect ? parseInt(worksheetCountSelect.value) : 1;
     output.innerHTML = Object.keys(hwMap).map(cat => {
       return `<tr><td colspan="4" class="text-light bg-secondary"><h4 class="mb-0">${cat}</h4></td></tr>` + hwMap[cat].map((hwSet, i) => {
-        const {title, xSize, ySize, mathSymbol, outputFunc, count, name} = hwSet;
+        const {title, xSize, ySize, mathSymbol, outputFunc, count, name, long} = hwSet;
         const eq = genEquation(xSize, ySize, mathSymbol);
-        const eqStr = outputFunc(eq, -1, 0);
+        const eqStr = outputFunc(eq, -1, 0, long);
         return `<tr>
         <td class="text-right pr-0 text-sm">
           <span class="mr-2 number">${i + 1}.</span>
@@ -43,9 +43,9 @@ const HwGen = (() => {
           <a href="./?set=${name}&worksheets=${worksheetCount}" onclick="HwGen.setWs('${name}', ${worksheetCount}); return false;">${title}</a>
           <div>${xSize === 1 && ySize === 1 ? 64 : count} Problems</div.
         </td>
-        <td>e.g.</td>
+        <td class="pr-0">e.g.</td>
         <td style="width:10rem;">
-          <table class="w-50"><tbody><tr class="example">${eqStr}</tr></tbody></table>
+          <table><tbody><tr class="example${long ? ' long' : ''}">${eqStr}</tr></tbody></table>
         </td>
         </tr>`}).join("");
     }).join("");
@@ -59,7 +59,7 @@ const HwGen = (() => {
       , worksheetCountSelect = document.getElementById("worksheetCount")
       , hwSet = hwSets[selectedSet]
       , allAnswerKeys = []
-      , { title, count, columns, xSize, ySize, mathSymbol, outputFunc, answerKey } = hwSet
+      , { title, count, columns, xSize, ySize, mathSymbol, outputFunc, answerKey, long } = hwSet
     ;
     worksheetCount = worksheetCountSelect ? parseInt(worksheetCountSelect.value) : 1
     worksheetsDiv.innerHTML = "";
@@ -68,15 +68,15 @@ const HwGen = (() => {
         , output = worksheet.querySelector(".output")
         , arr = generate(xSize, ySize, mathSymbol, count)
         , titleDiv = worksheet.querySelector(".title")
-        , outputStr = arr.map((eq, i) => outputFunc(eq, i, columns)).join("")
+        , outputStr = arr.map((eq, i) => outputFunc(eq, i, columns, long)).join("")
         , emoji = randArr(emojis)
       ;
-      allAnswerKeys.push(`<div class="answer-key-table col-4">
+      allAnswerKeys.push(`<div class="answer-key-table col-${long ? 6 : 4}">
         <div class="font-weight-bold">${emoji} ${title} #${i + 1}</div>
         <div class="row">${arr.map(answerKey).map((a, i) => 
       `<div class="text-nowrap col-${Math.floor(12 / columns)}">${i + 1}.) ${a}</div>`).join("")}</div></div>`);
       titleDiv.innerHTML = `${emoji} ${title} #${i + 1}`;
-      output.innerHTML = '<tr>' + outputStr + '</tr>';
+      output.innerHTML = `<tr${long ? ' class="long"' : ''}>` + outputStr + '</tr>';
       worksheetsDiv.appendChild(worksheet);
     }
     hwSetInfoDiv.innerHTML = `${worksheetCount} worksheets *Answer key on last page.`;
@@ -112,7 +112,7 @@ const HwGen = (() => {
         default: renderMain();
       }
       window.scrollTo(0, 0);
-      twemoji.parse(document.body);
+      twemoji && twemoji.parse(document.body);
     },
     setWs: (hwSetName, worksheetCount) => {
       if (hwSetName) {
