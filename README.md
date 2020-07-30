@@ -7,12 +7,11 @@ Generate print-friendly homework worksheets for math practice.
   📝 Math Homework Generator 📝</a>
 </p>
 
-</p>
-
 ## Features
-* Free
-* Print-friendly
-* Answer key on last page.
-* 12 Worksheet types
-* 1-digit equations are all possible equations not including 1.
-* Random emojis using Twemoji featured on each worksheet in case worksheets mix up.
+* 🈚 Free w/no ads
+* 🖨️ Print-friendly
+* 🗝️ Answer key on last page.
+* 📝 19 Worksheet types
+* 👨‍💻 Open source
+* 🔢 1-digit equations are all possible equations not including 1.
+* 😀 Random emojis using Twemoji featured on each worksheet in case worksheets mix up.
