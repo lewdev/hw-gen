@@ -1,4 +1,4 @@
-
+.text-lg { font-size: 2rem; }
 .page-break { page-break-after: always; }
 body { margin: 1.5rem; }
 .worksheets { font-size: 2rem; }
@@ -27,8 +27,10 @@ img.emoji {
   white-space: nowrap;
 }
 .example .number { display: none; }
+.example .emoji { font-size: 1rem; border-top: 0; }
 .example > td.answer { text-align: left; padding-left:0; }
-.example > td { border: 0; text-align: right; }
+tr.example > td { padding:.75rem; text-align: right; border-top: 0 !important; }
+.example > td { border: 0; text-align: right;  }
 .example > td .equation { width: 4rem !important; }
 .example > td.pb-5 { padding-bottom: 0 !important; padding-top: 0; }
 .example .answer-input.down, .example .answer-input { width: 2rem; }
