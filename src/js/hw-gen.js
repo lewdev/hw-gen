@@ -59,7 +59,7 @@ const HwGen = (() => {
       , worksheetCountSelect = document.getElementById("worksheetCount")
       , hwSet = hwSets[selectedSet]
       , allAnswerKeys = []
-      , { title, count, columns, xSize, ySize, mathSymbol, outputFunc, answerKey, long, useAllPossible1Digit } = hwSet
+      , { title, count, columns, xSize, ySize, mathSymbol, outputFunc, answerKey, long, answerSpace, useAllPossible1Digit } = hwSet
     ;
     worksheetCount = worksheetCountSelect ? parseInt(worksheetCountSelect.value) : 1
     worksheetsDiv.innerHTML = "";
@@ -68,7 +68,7 @@ const HwGen = (() => {
         , output = worksheet.querySelector(".output")
         , arr = generate(xSize, ySize, mathSymbol, count, useAllPossible1Digit)
         , titleDiv = worksheet.querySelector(".title")
-        , outputStr = arr.map((eq, i) => outputFunc(eq, i, columns, long)).join("")
+        , outputStr = arr.map((eq, i) => outputFunc(eq, i, columns, long, answerSpace)).join("")
         , emoji = randArr(emojis)
       ;
       allAnswerKeys.push(`<div class="answer-key-table col-${long ? 6 : 4}">

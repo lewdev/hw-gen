@@ -1,9 +1,9 @@
-const verticalEq = (eq, i, columns, mathSym, long) => `
+const verticalEq = (eq, i, columns, mathSym, long, answerSpace) => `
   <td class="text-muted number text-right">${i + 1}.)</td>
   <td class="pb-5">
     <div class="equation">${eq.x}</div>
     <div class="equation">${mathSym} ${eq.y}</div>
-    <div class="equation"><input type="text" class="answer-input"/></div>
+    <div class="equation" ${answerSpace ? `style="margin-bottom:${answerSpace}rem;"`:''}><input type="text" class="answer-input"/></div>
   </td>
   ${((i + 1) % columns) === 0 ? `</tr><tr${long ? ' class="long"' : ''}>` : ''}`
   /**
@@ -34,9 +34,8 @@ const verticalEq = (eq, i, columns, mathSym, long) => `
     <td class="text-center align-middle" rowspan="2">=</td>
     <td class="answer align-bottom" rowspan="2"><input type="text" class="answer-input down"/></td>
     </tr><tr>
-    <td class="text-center align-bottom"><input type="text" class="answer-input down"/></td>
-    <td class="text-center align-bottom"><input type="text" class="answer-input down"/></td>
-    <td></td>
+    <td class="text-center align-bottom" style="border-top:0;"><input type="text" class="answer-input down"/></td>
+    <td class="text-center align-bottom" style="border-top:0;"><input type="text" class="answer-input down"/></td>
     ${((i + 1) % 5) === 0 ? `</tr></tbody><div class="page-break"></div><table><tbody><tr>` : '</tr><tr style="border-top: 3px solid gray;">'}`
   /**
    * Solve:
@@ -202,18 +201,18 @@ const hwSets = {
   },
   "multiplication-2-2": {
     title: "Muliplication 2-digit Equations", category: "Multiplication",
-    count: 44, columns: 4, long: true,
+    count: 28, columns: 4, long: true, answerSpace: 6,
     xSize: 2, ySize: 2,
     mathSymbol: "*",
-    outputFunc: (eq, i, columns, long) => verticalEq(eq, i, columns, "&times;", long),
+    outputFunc: (eq, i, columns, long, answerSpace) => verticalEq(eq, i, columns, "&times;", long, answerSpace),
     answerKey: eq => eq.z,
   },
   "multiplication-3": {
     title: "Muliplication 3-digit Equations", category: "Multiplication",
-    count: 44, columns: 4, long: true,
+    count: 24, columns: 4, long: true, answerSpace: 10,
     xSize: 3, ySize: 3,
     mathSymbol: "*",
-    outputFunc: (eq, i, columns, long) => verticalEq(eq, i, columns, "&times;", long),
+    outputFunc: (eq, i, columns, long, answerSpace) => verticalEq(eq, i, columns, "&times;", long, answerSpace),
     answerKey: eq => eq.z,
   },
   "division": {
