@@ -1,9 +1,18 @@
 const HwGen = (() => {
-  const MODE = { MAIN: 1, WORKSHEET: 2 };
+  const MODE = { MAIN: 1, WORKSHEET: 2, INTRO: 3 };
+  const myNavbar = document.getElementById("myNavbar");
+  const introView = document.getElementById("introView");
+  const screenshotRotation = document.getElementById("screenshotRotation");
   const worksheetView = document.getElementById("worksheetView");
   const mainView = document.getElementById("mainView");
+  const categoryTabs = document.getElementById("categoryTabs");
   const hwMap = {};
-  let mode = MODE.MAIN;
+  const data = {
+    selectedTab: "",
+  };
+  let screenshotInterval = null;
+  let screenshotNum = 2;
+  let mode = MODE.INTRO;
   let selectedSet = "";
   let worksheetCount = 1;
   const genEquation = (xSize, ySize, mathSymbol) => {
@@ -27,11 +36,46 @@ const HwGen = (() => {
     return arr;
   };
   const renderMain = () => {
+    renderTabs();
+    renderWorksheetList();
+  };
+  const selectTab = cat => {
+    data.selectedTab = cat;
+    console.log(cat, data.selectedTab);
+    renderMain();
+  };
+  const renderTabs = () => {
+    const categories = Object.keys(hwMap);
+    if (!data.selectedTab) data.selectedTab = categories.length > 0 ? categories[0] : "";
+    categoryTabs.innerHTML = categories.map(cat => {
+      const selected = data.selectedTab === cat;
+      // class="${selected ? 'selected bg-secondary' : 'bg-primary'}"
+      return `<li class="btn btn-${selected ? 'info' : 'dark'}" onclick="HwGen.selectTab('${cat}'); return false;">
+        ${cat} <span class="badge badge-secondary">${hwMap[cat].length}</span>
+    </li>`}).join("");
+  };
+  const renderIntro = () => {
+    const wsCount = document.getElementById("wsCount");
+    let sum = 0;
+    Object.keys(hwMap).forEach(a => sum += hwMap[a].length);
+    if (wsCount) wsCount.innerHTML = sum;
+    //go through all screenshots
+    screenshotInterval = setInterval(() => {
+      screenshotRotation.innerHTML = `<img src="img/screenshot-${screenshotNum}.png" class="my-img rounded fade-in" width="500" />`;
+      screenshotNum++;
+      if (screenshotNum > 5) screenshotNum = 1;
+    }, 2000);
+  };
+  const renderWorksheetList = () => {
     const output = document.getElementById("output");
     const worksheetCountSelect = document.getElementById("worksheetCount");
     const worksheetCount = worksheetCountSelect ? parseInt(worksheetCountSelect.value) : 1;
-    output.innerHTML = Object.keys(hwMap).map(cat => {
-      return `<tr><td colspan="4" class="text-light bg-secondary"><h4 class="mb-0">${cat}</h4></td></tr>` + hwMap[cat].map((hwSet, i) => {
+    if (!data.selectedTab) {
+      output.innerHTML = `<tr><td colspan="99">No selected tab</td></tr>`;
+      return;
+    }
+    output.innerHTML = //`<tr><td colspan="4" class="text-light bg-secondary"><h4 class="mb-0">${data.selectedTab}</h4></td></tr>` +
+      hwMap[data.selectedTab].map((hwSet, i) => {
         const {title, xSize, ySize, mathSymbol, outputFunc, count, name, long, useAllPossible1Digit} = hwSet;
         const eq = genEquation(xSize, ySize, mathSymbol);
         const eqStr = outputFunc(eq, -1, 0, long);
@@ -48,7 +92,6 @@ const HwGen = (() => {
           <table><tbody><tr class="example${long ? ' long' : ''}">${eqStr}</tr></tbody></table>
         </td>
         </tr>`}).join("");
-    }).join("");
     document.title = "HW Gen: Math Homework Generator";
   };
   const renderWorksheet = () => {
@@ -73,7 +116,7 @@ const HwGen = (() => {
       ;
       allAnswerKeys.push(`<div class="answer-key-table col-${long ? 6 : 4}">
         <div class="font-weight-bold">${emoji} ${title} #${i + 1}</div>
-        <div class="row">${arr.map(answerKey).map((a, i) => 
+        <div class="row">${arr.map(answerKey).map((a, i) =>
       `<div class="text-nowrap col-${Math.floor(12 / columns)}">${i + 1}.) ${a}</div>`).join("")}</div></div>`);
       titleDiv.innerHTML = `${emoji} ${title} #${i + 1}`;
       output.innerHTML = `<tr${long ? ' class="long"' : ''}>${outputStr}</tr>`;
@@ -103,10 +146,16 @@ const HwGen = (() => {
   }
   window.onload = init;
   return {
+    intro: () => { mode = MODE.INTRO; HwGen.render(); },
+    start: () => { mode = MODE.MAIN; HwGen.render(); },
     render: () => {
+      if (screenshotInterval) clearInterval(screenshotInterval);
+      myNavbar.style.display = mode === MODE.MAIN ? "" : "none";
+      introView.style.display = mode === MODE.INTRO ? "" : "none";
       mainView.style.display = mode === MODE.MAIN ? "" : "none";
       worksheetView.style.display = mode === MODE.WORKSHEET ? "" : "none";
       switch (mode) {
+        case MODE.INTRO: renderIntro(); break;
         case MODE.WORKSHEET: renderWorksheet(); break;
         case MODE.MAIN:
         default: renderMain();
@@ -114,6 +163,7 @@ const HwGen = (() => {
       window.scrollTo(0, 0);
       twemoji && twemoji.parse(document.body);
     },
+    selectTab,
     setWs: (hwSetName, worksheetCount) => {
       if (hwSetName) {
         setUrlParam(`set=${hwSetName}&worksheets=${worksheetCount}`);
@@ -124,6 +174,7 @@ const HwGen = (() => {
         mode = MODE.MAIN;
         selectedSet = "";
         setUrlParam("");
+        HwGen.render();
       }
       HwGen.render();
       return false;

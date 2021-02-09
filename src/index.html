@@ -1,5 +1,5 @@
 <!doctype html><html><head><meta charset="utf-8">
-  <title>Math Homework Gen | Generate print-friendly randomized math worksheets for practice.</title>
+  <title>Math Homework Generator | Generate print-friendly randomized math worksheets for practice.</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Generate print-friendly randomized math worksheets for practice.">
   <meta name="author" content="Lewis Nakao">
@@ -29,38 +29,103 @@
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://lewdev.github.io/apps/hw-gen/img/banner-1200x630.png">
 
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-  <link rel="stylesheet" href="css-only-modal.css">
+  <link rel="stylesheet" href="assets/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css-only-modal.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div id="myNavbar" class="navbar bg-secondary navbar-dark text-white" style="display: none;">
+    <div class="container">
+      <div class="navbar-left">
+        <a href="#" class="text-decoration-none text-light" onclick="HwGen.intro(); return false;">
+          <h2 class="navbar-title"><img src="icons/android-chrome-192x192.png" class="emoji"/> Math Homework Generator</h2>
+        </a>
+      </div>
+      <a href="http://github.com/lewdev/hw-gen" class="btn btn-sm btn-outline-light ml-auto js-ht-download-link" data-type="theme" data-id="96">🐙 View Source</a>
+      <a href="#about" class="btn btn-sm btn-outline-light ml-2 js-ht-download-link" data-type="theme" data-id="96">More Info</a>
+    </div>
+  </div>
+  <div id="introView">
+    <div id="jumbotron">
+      <div class="jumbotron bg-light mb-0 radius-0 jumbotron">
+        <div class="container">
+          <div class="header row">
+            <div class="col-9">
+              <h1 class="my-jumbo-header">Math Homework Generator</h1>
+              <span class="lead">
+                Quickly generate random print-friendly homework worksheets for math practice.
+              </span>
+              <div class="mt-4">
+                <button class="btn btn-wide btn-primary btn-lg my-2 mr-2 js-ht-download-link" data-type="theme" data-id="96" onclick="HwGen.start();">Start Now</button>
+                <a href="#about">More Info</a>
+              </div>
+            </div>
+            <div class="col-3">
+              <img class="my-img" src="icons/android-chrome-192x192.png"/>
+            </div>
+          </div>
+          <hr class="m-5">
+          <div class="row featurette">
+            <div class="col-md-7">
+              <h1>Features <span class="text-muted">that will blow your mind.</span></h1>
+              <ul class="text-lg">
+                <li>🙊 no login or registration</li>
+                <li>🆓 no ads 🙈</li>
+                <li>🖨️ Print-friendly</li>
+                <li>🗝️ Answer key on last page.</li>
+                <li>📝 <span id="wsCount"></span> worksheets available.</li>
+                <li>👨‍💻 Open <a href="https://github.com/lewdev/hw-gen">source</a></li>
+              </ul>
+              <p class="lead"></p>
+            </div>
+            <div class="col-md-5">
+              <div id="screenshotRotation">
+                <img src="img/screenshot-1.png" class="my-img rounded" width="500" />
+              </div>
+              <!-- <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"></rect><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg> -->
+            </div>
+          </div>
+          <hr class="m-5">
+          <div class="row featurette">
+            <div class="col-md-12 text-center">
+              <h1 class="text-muted">There's no sense in not trying!</h1>
+              <button class="btn btn-wide btn-primary btn-lg my-2 mr-2 text-lg" data-type="theme" data-id="96" onclick="HwGen.start();">Start Now</button>
+            </div>
+          </div>
+          <hr class="m-5">
+          <div class="row featurette mb-5">
+            <div class="col-md-12 text-center">
+              <p class="text-lg text-info"><a href="https://lewdev.github.com">👤 Lewis Nakao</a></p>
+              <div class="row m-3">
+                <div class="col-md-2"><a target="_blank" href="https://twitter.com/lewdev">🐦 Twitter</a></div>
+                <div class="col-md-2"><a target="_blank" href="https://github.com/lewdev">🐙 GitHub</a></div>
+                <div class="col-md-2"><a target="_blank" href="https://facebook.com/SWEinHawaii">📘 Facebook</a></div>
+                <div class="col-md-2"><a target="_blank" href="https://www.linkedin.com/in/lewisnakao">👔 LinkedIn</a></div>
+                <div class="col-md-2"><a target="_blank" href="http://stackoverflow.com/cv/lewis.nakao">📚 StackOverflow</a></div>
+                <div class="col-md-2"><a target="_blank" href="https://www.youtube.com/channel/UCewHmEWXdFVyzn-QaZitKBA"> 🎥 YouTube</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="mainView" class="container">
-    <h1><img src="icons/android-chrome-192x192.png" class="emoji"/> Math Homework Gen</h1>
-    <p><strong>Math Homework Gen</strong> will  generate new random print-friendly homework worksheets for math practice. <a href="#about">More Info</a></p>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-12">
         <h4>Tips</h4>
         <ul>
           <li>🔎 Use Print Preview feature and set "Zoom" to "Shrink to fit" to ensure best print results.</li>
           <li>📏 Adjust settings such as margin size to 0.3" optimize print output.</li>
           <li>📄 Adjust "Worksheets" value to get more worksheets per set of print outs. All answer keys will be printed on the last page.</li>
-        </ul>
-      </div>
-      <div class="col-md-6">
-        <h4>Features</h4>
-        <ul>
-          <li>🈚 Free w/no ads</li>
-          <li>🖨️ Print-friendly</li>
-          <li>🗝️ Answer key on last page.</li>
-          <li>👨‍💻 Open source (<a href="https://github.com/lewdev/hw-gen">See source code</a>)</li>
           <li>🔢 1-digit equations are all possible equations not including 1.</li>
           <li>😀 Random emojis using <a href="https://twemoji.twitter.com">Twemoji</a> featured on each worksheet in case worksheets mix up.</li>
         </ul>
       </div>
     </div>
-    <label class="d-block">
-      <div class="d-inline-block">
+    <div class="row">
+      <div class="col-1">
         <select id="worksheetCount" class="form-control" onchange="HwGen.render()">
           <option>1</option>
           <option>2</option>
@@ -75,8 +140,12 @@
           <option>20</option>
         </select>
       </div>
-      <div class="d-inline-block"> Worksheets</div>
-    </label>
+      <div class="col-2"> Worksheets</div>
+      <ul id="categoryTabs" class="col-9 tabs group btn-group"></ul>
+      <table class="table"><tbody id="output"></tbody></table>
+    </div>
+  </div>
+  <div id="worksheetSelectView" style="display: none;">
     <table class="table"><tbody id="output"></tbody></table>
     <div class="text-center text-muted">
       Author: <a href="https://lewdev.github.io">Lewis Nakao</a>
@@ -112,45 +181,47 @@
   <div id="about" class="modal-window no-print">
     <div>
       <a href="#" title="Close" class="modal-close">&#10006;</a>
-      <div class="p-3">
-        <p class="text-center">
-          <a href="#image-modal" title="View Enlarged" class="text-center d-block">
-            <img src="img/math-hw-gen.jpg" class="img-fluid rounded my-img">
-          </a>
-        </p>
-        <h3>What is this?</h3>
-        <p>A math homework generator that I initially wanted to be simple for my daughter, but I wanted
-          more features and it might continue to grow.</p>
-        <h3>Why?</h3>
-        <p>I just wanted some simple equations for her to practice multiplication since I started teaching her.</p>
-        <p>Now it's become a mission to be something better or at least different from what else is out there.</p>
-        <p>I have discovered several other math homework generators, while some were very good, it didn't
-          everything I wanted it to do. So I feel like I should continue to build upon it.</p>
-        <h3>Author: Lewis Nakao</h3>
-        <p>I am a software engineer in Hawaii.</p>
-        <div class="row">
-          <div class="col-6">
-            <a href="https://drive.google.com/open?id=1neZuwiGy5SBrFOiJnbcvcx1Bb-LV8iPP" target="_blank">
-              <i class="fas fa-file-alt"></i> My resume (pdf)
-            </a>
+      <div class="p-3 row">
+        <div class="col-md-8">
+          <h3>What is this?</h3>
+          <p>A math homework generator that I initially wanted to be simple for my daughter, but I wanted
+            more features and it might continue to grow.</p>
+          <h3>Why?</h3>
+          <p>I just wanted some simple equations for her to practice multiplication since I started teaching her.</p>
+          <p>Now it's become a mission to be something better or at least different from what else is out there.</p>
+          <p>I have discovered several other math homework generators, while some were very good, it didn't
+            everything I wanted it to do. So I feel like I should continue to build upon it.</p>
+          <h3>Author: Lewis Nakao</h3>
+          <p>I am a software engineer in Hawaii.</p>
+          <div class="row">
+            <div class="col-6">
+              <a href="https://drive.google.com/open?id=1neZuwiGy5SBrFOiJnbcvcx1Bb-LV8iPP" target="_blank">
+                <i class="fas fa-file-alt"></i> My resume (pdf)
+              </a>
+            </div>
+            <div class="col-6">
+              <a href="https://www.linkedin.com/in/lewisnakao/" target="_blank">
+                <i class="fab fa-linkedin"></i> LinkedIn Profile
+              </a>
+            </div>
+            <div class="col-6">
+              <a href="https://www.facebook.com/lewdev" target="_blank">
+                <i class="fab fa-facebook-square"></i> Facebook Profile
+              </a>
+            </div>
+            <div class="col-6">
+              <a href="https://github.com/lewdev" target="_blank">
+                <i class="fab fa-github-square"></i> Github Profile
+              </a>
+            </div>
           </div>
-          <div class="col-6">
-            <a href="https://www.linkedin.com/in/lewisnakao/" target="_blank">
-              <i class="fab fa-linkedin"></i> LinkedIn Profile
-            </a>
-          </div>
-          <div class="col-6">
-            <a href="https://www.facebook.com/lewdev" target="_blank">
-              <i class="fab fa-facebook-square"></i> Facebook Profile
-            </a>
-          </div>
-          <div class="col-6">
-            <a href="https://github.com/lewdev" target="_blank">
-              <i class="fab fa-github-square"></i> Github Profile
-            </a>
-          </div>
+          <p>Libraries Used: <a href="https://fontawesome.com/">Font Awesome</a>, Bootstrap, Twemoji.</p>
         </div>
-        <p>Libraries Used: <a href="https://fontawesome.com/">Font Awesome</a>, Bootstrap, Twemoji.</p>
+        <div class="col-md-4">
+          <p class="text-center">
+            <img src="img/math-hw-gen.jpg" class="img-fluid rounded my-img">
+          </p>
+        </div>
       </div>
     </div>
   </div>

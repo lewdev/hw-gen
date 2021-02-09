@@ -1,6 +1,6 @@
-.text-lg { font-size: 2rem; }
+.my-img { width: 90%; }
 .page-break { page-break-after: always; }
-body { margin: 1.5rem; }
+/* body { margin: 1.5rem; } */
 .worksheets { font-size: 2rem; }
 .number {
   font-size: 1.5rem;
@@ -15,10 +15,10 @@ img.emoji {
 }
 #answerKeyCbx { width: .7rem; height: .7rem; }
 .my-table > tbody > tr > td { border-top: 0; }
-.table > tbody > tr:last-child { 
+.table > tbody > tr:last-child {
   border-bottom: 1px solid #dee2e6;
 }
-.my-table.table > tbody > tr:last-child { 
+.my-table.table > tbody > tr:last-child {
   border-bottom: 0;
 }
 .equation {
@@ -39,7 +39,7 @@ tr.example > td { padding:.75rem; text-align: right; border-top: 0 !important; }
 tr.example.long > td > div.equation > .answer-input { width: 3.5rem; }
 tr.long > td > div.equation { width: 8rem; }
 tr.long > td > div.equation > .answer-input { width: 6rem; }
-.answer-input { 
+.answer-input {
   border: 0px;
   border-top: 3px solid black;
   width: 5rem;
@@ -52,7 +52,7 @@ tr.long > td > div.equation > .answer-input { width: 6rem; }
 }
 .answer-key-table { font-size: 16px; border: 1px solid gray; }
 .answer-key { width: 5rem; display: inline-block; }
-.worksheets-view-panel { margin-top: -1rem; }
+/* .worksheets-view-panel { margin-top: -1rem; } */
 @media print {
   .no-print { display: none; }
   body { margin: 0; font-size: 4px; }
@@ -61,12 +61,53 @@ tr.long > td > div.equation > .answer-input { width: 6rem; }
   body { margin: .3rem; }
   .worksheets-view-panel { margin-top: 0; }
 }
+
+.my-jumbo-header {
+  font-size: 5.5rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+.text-lg { font-size: 2rem; }
+@media (min-width: 0) {
+  .my-jumbo-header { font-size: 2rem; }
+}
 @media (min-width: 500px) {
-  .my-img { width: 80%; }
+  .my-jumbo-header { font-size: 2rem; }
 }
 @media (min-width: 800px) {
-  .my-img { width: 60%; }
+  .my-jumbo-header { font-size: 4rem; }
 }
 @media (min-width: 1200px) {
-  .my-img { width: 40%; }
+  .my-jumbo-header { font-size: 5.5rem; }
 }
+.fade-in {
+  animation: fadeIn ease 1s;
+  -webkit-animation: fadeIn ease 1s;
+  -moz-animation: fadeIn ease 1s;
+  -o-animation: fadeIn ease 1s;
+  -ms-animation: fadeIn ease 1s;
+  }
+  @keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+  }
+
+  @-moz-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+  }
+
+  @-webkit-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+  }
+
+  @-o-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+  }
+
+  @-ms-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+  }

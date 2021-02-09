@@ -1,0 +1,11 @@
+{
+  "name": "hw-gen",
+  "version": "1.0.0",
+  "description": "Generate print-friendly homework worksheets for math practice.",
+  "scripts": {
+    "preinstall": "npm i serve concurrently opener -g",
+    "start": "concurrently \"serve src -p 3022\" \"opener http://localhost:3022\""
+  },
+  "author": "Lewis Nakao <lewdev@gmail.com>",
+  "license": "UNLICENSED"
+}
