@@ -86,28 +86,27 @@ tr.long > td > div.equation > .answer-input { width: 6rem; }
   -moz-animation: fadeIn ease 1s;
   -o-animation: fadeIn ease 1s;
   -ms-animation: fadeIn ease 1s;
-  }
-  @keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
-  }
+}
+@keyframes fadeIn { 0% {opacity:0;}  100% {opacity:1;} }
+@-moz-keyframes fadeIn { 0% {opacity:0;} 100% {opacity:1;} }
+@-webkit-keyframes fadeIn { 0% {opacity:0;} 100% {opacity:1;} }
+@-o-keyframes fadeIn { 0% {opacity:0;} 100% {opacity:1;} }
+@-ms-keyframes fadeIn { 0% {opacity:0;} 100% {opacity:1;} }
 
-  @-moz-keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
-  }
 
-  @-webkit-keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
-  }
+@-webkit-keyframes float {
+  0% { transform: translatey(0px); }
+  50% { transform: translatey(-20px); }
+  100% { transform: translatey(0px); }
+}
+@keyframes float {
+  0% { transform: translatey(0px); }
+  50% { transform: translatey(-20px); }
+  100% { transform: translatey(0px); }
+}
 
-  @-o-keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
-  }
-
-  @-ms-keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
-  }
+.landing-logo {
+  overflow: hidden;
+  transform: translatey(0px);
+  animation: float 3s ease-in-out infinite;
+}
