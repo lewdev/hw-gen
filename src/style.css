@@ -1,4 +1,25 @@
-.my-img { width: 90%; }
+.tip-scroller { padding-left: 0; }
+.tip-scroller > li { list-style: none; }
+html { scroll-behavior: smooth; }
+.my-img { width: 90%; box-shadow: 0px 0px 15px 5px #888; }
+.icon-shadow {
+  width: 50px;
+  margin-top: 1rem;
+  box-shadow: 0px 0px 15px 5px #888;
+  animation: grow 3s ease-in-out infinite;
+}
+@keyframes grow {
+  0% {
+    width: 50px;
+    box-shadow: 0px 0px 8px 5px #888;
+  }
+  50% { width: 80px;
+    box-shadow: 0px 0px 15px 5px #888;
+  }
+  100% { width: 50px;
+    box-shadow: 0px 0px 8px 5px #888;
+   }
+}
 .page-break { page-break-after: always; }
 /* body { margin: 1.5rem; } */
 .worksheets { font-size: 2rem; }
@@ -67,12 +88,14 @@ tr.long > td > div.equation > .answer-input { width: 6rem; }
   font-weight: 300;
   line-height: 1.2;
 }
-.text-lg { font-size: 2rem; }
+.text-lg { font-size: 1.75rem; }
 @media (min-width: 0) {
   .my-jumbo-header { font-size: 2rem; }
+  .text-lg { font-size: 1.3rem; }
 }
 @media (min-width: 500px) {
   .my-jumbo-header { font-size: 2rem; }
+  .text-lg { font-size: 1.5rem; }
 }
 @media (min-width: 800px) {
   .my-jumbo-header { font-size: 4rem; }
@@ -93,7 +116,6 @@ tr.long > td > div.equation > .answer-input { width: 6rem; }
 @-o-keyframes fadeIn { 0% {opacity:0;} 100% {opacity:1;} }
 @-ms-keyframes fadeIn { 0% {opacity:0;} 100% {opacity:1;} }
 
-
 @-webkit-keyframes float {
   0% { transform: translatey(0px); }
   50% { transform: translatey(-20px); }
@@ -106,7 +128,6 @@ tr.long > td > div.equation > .answer-input { width: 6rem; }
 }
 
 .landing-logo {
-  overflow: hidden;
   transform: translatey(0px);
   animation: float 3s ease-in-out infinite;
 }
