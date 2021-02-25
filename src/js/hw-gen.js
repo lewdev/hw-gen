@@ -1,27 +1,33 @@
 const HwGen = (() => {
-  const MODE = { INTRO: 1, CATEGORIES: 2, WORKSHEET_SELECT: 3, WORKSHEETS: 4, };
+  const MODE = { INTRO: 1, CATEGORIES: 2, WORKSHEET_SELECT: 3, PRINT_CONFIG: 4, PREVIEW: 5, PREVIEW: 6 };
   const myNavbar = document.getElementById("myNavbar");
   const introView = document.getElementById("introView");
+  const breadcrumbView = document.getElementById("breadcrumbView");
+  const breadcrumb = document.getElementById("breadcrumb");
   const screenshotRotation = document.getElementById("screenshotRotation");
+  const tipsView = document.getElementById("tipsView");
   const tipScroller = document.querySelector(".tip-scroller");
   const tipElemList = tipScroller.querySelectorAll("li");
   const categoriesView = document.getElementById("categoriesView");
   const worksheetSelectView = document.getElementById("worksheetSelectView");
+  const worksheetCountSelect = document.getElementById("worksheetCount");
+  const answerKeyChkbx = document.getElementById("answerKeyChkbx");
+  const printConfigView = document.getElementById("printConfigView");
   const worksheetView = document.getElementById("worksheetView");
-  const categoryTabs = document.getElementById("categoryTabs");
+  const categorySelectView = document.getElementById("categorySelectView");
+  const footer = document.getElementById("footer");
   const hwMap = {};
   const data = {
+    "mode": MODE.INTRO,
     "selectedCat": "",
-    "selectedWs": "",
+    "selectedSet": "",
     "selectedCount": 6,
+    "showAnswerKey": true,
   };
   let screenshotInterval = null;
   let screenshotNum = 2;
   let tipScrollInterval = null;
   let tipNum = 0;
-  let mode = MODE.INTRO;
-  let selectedSet = "";
-  let worksheetCount = 1;
   const genEquation = (xSize, ySize, mathSymbol) => {
     const x = randRangeByDigits(xSize);
     const y = randRangeByDigits(ySize);
@@ -42,12 +48,10 @@ const HwGen = (() => {
     }
     return arr;
   };
-  const renderMain = () => {
-    renderWorksheetList();
-  };
   const selectCat = cat => {
+    if (cat !== data["selectedCat"]) data["selectedSet"] = "";
     data["selectedCat"] = cat;
-    view = MODE.WORKSHEET_SELECT;
+    data['mode'] = MODE.WORKSHEET_SELECT;
     render();
   };
   const renderIntro = () => {
@@ -63,72 +67,90 @@ const HwGen = (() => {
       if (screenshotNum > 5) screenshotNum = 1;
     }, 2000);
   };
+  const addBreadcrumb = (arr, action, label, selected) => 
+    arr.push(`<li class="breadcrumb-item">${selected ? label :  `<a href="#" onclick="${action} return false;">${label}</a>`}</li>`);
+  const renderBreadcrumb = () => {
+    const arr = [];
+    addBreadcrumb(arr, "HwGen.intro();", "🏠 Home", data['mode'] === MODE.INTRO);
+    addBreadcrumb(arr, "HwGen.start();", "⚖ Categories", data['mode'] === MODE.CATEGORIES);
+    if (data['mode'] !== MODE.CATEGORIES)
+      addBreadcrumb(arr, `HwGen.selectCat('${data['selectedCat']}');`, `🔢 ${data['selectedCat']}`, data['mode'] === MODE.WORKSHEET_SELECT);
+    if ((data['mode'] !== MODE.CATEGORIES  && data['mode'] !== MODE.WORKSHEET_SELECT) && data['selectedSet'])
+      addBreadcrumb(arr, `HwGen.printConfig();`, "🖨 Print Config", data['mode'] === MODE.PRINT_CONFIG);
+    if ((data['mode'] !== MODE.CATEGORIES  && data['mode'] !== MODE.WORKSHEET_SELECT) && data['selectedSet'])
+      addBreadcrumb(arr, `HwGen.preview();`, `📄 ${hwSets[data['selectedSet']].title}`, data['mode'] === MODE.PREVIEW);
+    breadcrumb.innerHTML = arr.join("");
+  };
+  const getIcon = cat => {
+    switch(cat) {
+      case 'Addition': return '➕';
+      case 'Subtraction': return '➖';
+      case 'Multiplication': return '✖';
+      case 'Division': return '➗';
+    }
+    return '🔢';
+  };
   const renderCategories = () => {
     const categories = Object.keys(hwMap);
     if (!data["selectedCat"]) data["selectedCat"] = categories.length > 0 ? categories[0] : "";
-    categoryTabs.innerHTML = categories.map(cat => {
-      const selected = data["selectedCat"] === cat;
-      // class="${selected ? 'selected bg-secondary' : 'bg-primary'}"
-      return `<li class="btn btn-${selected ? 'info' : 'dark'}" onclick="HwGen.selectCat('${cat}'); return false;">
-        ${cat} <span class="badge badge-secondary">${hwMap[cat].length}</span>
-    </li>`}).join("");
+    categorySelectView.innerHTML = categories.map(cat => {
+      return `
+      <div class="col-md-6 p-2">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="text-nowrap mb-0">${getIcon(cat)} ${cat}</h3>
+          </div>
+          <div class="card-body p-3">
+          ${hwMap[cat].length} worksheets
+            <button class="btn btn-primary d-block w-100 mt-2" onclick="HwGen.selectCat('${cat}'); return false;">🔍 View</button>
+          </div>
+        </div>
+      </div>`}).join("");
   };
   const renderWorksheetList = () => {
-    const output = document.getElementById("output");
-    const worksheetCountSelect = document.getElementById("worksheetCount");
-    const worksheetCount = worksheetCountSelect ? parseInt(worksheetCountSelect.value) : 1;
+    const worksheetList = document.getElementById("worksheetList");
+    const answerKey = true;
     if (!data["selectedCat"]) {
-      output.innerHTML = `<tr><td colspan="99">No selected tab</td></tr>`;
+      worksheetList.innerHTML = `<div>No selected tab</div>`;
       return;
     }
-    output.innerHTML = //`<tr><td colspan="4" class="text-light bg-secondary"><h4 class="mb-0">${data["selectedCat"]}</h4></td></tr>` +
+    worksheetList.innerHTML = `<h3>Select ${data["selectedCat"]} Worksheet</h3>` +
       hwMap[data["selectedCat"]].map((hwSet, i) => {
         const {title, xSize, ySize, mathSymbol, outputFunc, count, name, long, useAllPossible1Digit} = hwSet;
         const eq = genEquation(xSize, ySize, mathSymbol);
         const eqStr = outputFunc(eq, -1, 0, long);
-        return `<div class="row">
-        <div class="col-md-1 text-right pr-0 text-sm">
+        return `${i === 0 ? '' : '<hr/>'}<div class="row">
+        <div class="col-1 text-right pr-0 text-sm">
           <span class="mr-2 number">${i + 1}.</span>
         </div>
-        <div class="col-md-5>
-          <a href="worksheet.html?set=${a}${answerKey ? '&showAnswerKey=1' : ''}" target="_blank">${title}</a>
+        <div class="col-md-5">
+          <a href="./?set=${name}" onclick="HwGen.setWs('${name}'); return false;">${title}</a>
+          <div>${useAllPossible1Digit ? 64 : count} Problems</div>
           ${answerKey ? '<div class="text-muted">w/answer key</div>' : ''}
-          ${xSize === 1 && ySize === 1 ? 64 : count} Problems
         </div>
-        <div>e.g.</div>
-        <div class="col-md-6" style="width:10rem;">
-          <table class="w-50"><tbody><tr class="example">${eqStr}</tr></tbody></table>
+        <div class="col-1">e.g.</div>
+        <div class="col-md-5" style="width:10rem;">
+          <table><tbody><tr class="example">${eqStr}</tr></tbody></table>
         </div>
       </div>`;
-        // return `<tr>
-        // <td class="text-right pr-0 text-sm">
-        //   <span class="mr-2 number">${i + 1}.</span>
-        // </td>
-        // <td>
-        //   <a href="./?set=${name}&worksheets=${worksheetCount}" onclick="HwGen.setWs('${name}', ${worksheetCount}); return false;">${title}</a>
-        //   <div>${useAllPossible1Digit ? 64 : count} Problems</div.
-        // </td>
-        // <td class="pr-0">e.g.</td>
-        // <td style="width:10rem;">
-        //   <table><tbody><tr class="example${long ? ' long' : ''}">${eqStr}</tr></tbody></table>
-        // </td>
-        // </tr>`;
       }).join("");
     document.title = `Math Homework Generator | ${data["selectedCat"]}`;
   };
-  const renderWorksheet = () => {
+  const renderPreview = () => {
     const worksheetsDiv = document.querySelector(".worksheets")
       , answerKeyDiv = document.querySelector(".answerKey")
       , hwSetInfoDiv = document.querySelector(".hw-set-info")
       , worksheetOrig = document.querySelector(".worksheet").cloneNode(true)
-      , worksheetCountSelect = document.getElementById("worksheetCount")
-      , hwSet = hwSets[selectedSet]
+      , hwSet = hwSets[data['selectedSet']]
       , allAnswerKeys = []
-      , { title, count, columns, xSize, ySize, mathSymbol, outputFunc, answerKey, long, answerSpace, useAllPossible1Digit } = hwSet
-    ;
-    worksheetCount = worksheetCountSelect ? parseInt(worksheetCountSelect.value) : 1
+      ;
+    if (!hwSet) {
+      alert(`Worksheet set doesn't exist ${data['selectedSet']} `);
+      return;
+    }
+    const { title, count, columns, xSize, ySize, mathSymbol, outputFunc, answerKey, long, answerSpace, useAllPossible1Digit } = hwSet
     worksheetsDiv.innerHTML = "";
-    for (let i = 0; i < worksheetCount; i++) {
+    for (let i = 0; i < data['selectedCount']; i++) {
       const worksheet = worksheetOrig.cloneNode(true)
         , output = worksheet.querySelector(".output")
         , arr = generate(xSize, ySize, mathSymbol, count, useAllPossible1Digit)
@@ -144,31 +166,52 @@ const HwGen = (() => {
       output.innerHTML = `<tr${long ? ' class="long"' : ''}>${outputStr}</tr>`;
       worksheetsDiv.appendChild(worksheet);
     }
-    hwSetInfoDiv.innerHTML = `${worksheetCount} worksheets *Answer key on last page.`;
-    answerKeyDiv.innerHTML = allAnswerKeys.join("");
+    hwSetInfoDiv.innerHTML = `${data['selectedCount']} worksheets. ${data['showAnswerKey'] ? '' : 'No '}Answer Key on last page.`;
+    answerKeyDiv.innerHTML = data['showAnswerKey'] ? allAnswerKeys.join("") : '';
     document.title = title;
   };
   const render = () => {
     window.scrollTo();
+    if (!data['mode']) data['mode'] = MODE.INTRO;
     if (screenshotInterval) clearInterval(screenshotInterval);
-    myNavbar.style.display = mode === MODE.CATEGORIES ? "" : "none";
-    introView.style.display = mode === MODE.INTRO ? "" : "none";
-    categoriesView.style.display = mode === MODE.CATEGORIES ? "" : "none";
-    worksheetSelectView.style.display = mode === MODE.WORKSHEET_SELECT ? "" : "none";
-    worksheetView.style.display = mode === MODE.WORKSHEETS ? "" : "none";
-    switch (mode) {
+    const displayNavView = [MODE.CATEGORIES, MODE.WORKSHEET_SELECT, MODE.PRINT_CONFIG].includes(data['mode']) ? "" : "none";
+    const displayFooter = [MODE.CATEGORIES, MODE.WORKSHEET_SELECT, MODE.PRINT_CONFIG, MODE.INTRO].includes(data['mode']) ? "" : "none";
+    breadcrumbView.style.display = myNavbar.style.display = tipsView.style.display = displayNavView;
+    footer.style.display = displayFooter;
+    introView.style.display = data['mode'] === MODE.INTRO ? "" : "none";
+    categoriesView.style.display = data['mode'] === MODE.CATEGORIES ? "" : "none";
+    worksheetSelectView.style.display = data['mode'] === MODE.WORKSHEET_SELECT ? "" : "none";
+    printConfigView.style.display = data['mode'] === MODE.PRINT_CONFIG ? "" : "none";
+    worksheetView.style.display = data['mode'] === MODE.PREVIEW ? "" : "none";
+    handleParams();
+    switch (data['mode']) {
       case MODE.INTRO: renderIntro(); break;
       case MODE.CATEGORIES: renderCategories(); break;
-      case MODE.WORKSHEETS: renderWorksheet(); break;
-      default: renderMain();
+      case MODE.WORKSHEET_SELECT: renderWorksheetList(); break;
+      case MODE.PREVIEW: renderPreview(); break;
+      default:
     }
+    renderBreadcrumb();
     window.scrollTo(0, 0);
     twemoji && twemoji.parse(document.body);
   };
+  const handleParams = () => {
+    if (data['selectedSet'] && hwSets[data['selectedSet']]) {
+      setUrlParam(`set=${data['selectedSet']}`);
+    }
+    else {
+      setUrlParam("");
+    }
+    data['selectedCount'] = worksheetCountSelect ? parseInt(worksheetCountSelect.value) : 1;
+    data['showAnswerKey'] = answerKeyChkbx.checked ? true : false;
+  };
   const init = () => {
-    selectedSet = getUrlParam("set");
-    worksheetCount = parseInt(getUrlParam("worksheets")) || 3;
-    if (selectedSet) mode = MODE.WORKSHEET;
+    const hwSetName = getUrlParam("set");
+    if (hwSetName && hwSets[hwSetName]) {
+      data['selectedSet'] = hwSetName;
+      data['selectedCat'] = hwSets[hwSetName].category;
+      data['mode'] = MODE.PRINT_CONFIG;
+    }
     //map sets by Category.
     Object.keys(hwSets).map(a => {
       const hwSet = hwSets[a];
@@ -196,25 +239,23 @@ const HwGen = (() => {
     if (tipNum >= tipElemList.length) tipNum = 0;
   };
   window.onload = init;
+  const setWs = hwSetName => {
+    data['selectedSet'] = hwSetName;
+    data['mode'] = MODE.PRINT_CONFIG
+    HwGen.render();
+    return false;
+  };
+  const intro = () => { data['mode'] = MODE.INTRO; HwGen.render(); };
+  const start = () => { data['mode'] = MODE.CATEGORIES; HwGen.render(); };
+  const printConfig = () => { data['mode'] = MODE.PRINT_CONFIG; HwGen.render(); };
+  const preview = () => { data['mode'] = MODE.PREVIEW; HwGen.render(); };
   return {
-    intro: () => { mode = MODE.INTRO; HwGen.render(); },
-    start: () => { mode = MODE.CATEGORIES; HwGen.render(); },
+    intro,
+    start,
+    printConfig,
+    preview,
     render,
     selectCat, nextTip,
-    setWs: (hwSetName, worksheetCount) => {
-      if (hwSetName) {
-        setUrlParam(`set=${hwSetName}&worksheets=${worksheetCount}`);
-        mode = MODE.WORKSHEET;
-        selectedSet = hwSetName;
-      }
-      else {
-        mode = MODE.CATEGORIES;
-        selectedSet = "";
-        setUrlParam("");
-        HwGen.render();
-      }
-      HwGen.render();
-      return false;
-    }
+    setWs
   };
 })();

@@ -89,9 +89,7 @@
           <hr class="m-5">
           <div class="row featurette">
             <div class="col-md-5">
-              <div class="text-center p-3" style="font-size: 5rem;">
-                🔄
-              </div>
+              <div class="text-center p-3" style="font-size: 5rem;">🔄</div>
             </div>
             <div class="col-md-7">
               <h1>Repitition <span class="text-muted">and practice make perfect.</span></h1>
@@ -119,21 +117,7 @@
           <div class="row featurette">
             <div class="col-md-12 text-center">
               <h1 class="text-muted">Why not?</h1>
-              <button class="btn btn-wide btn-primary btn-lg my-2 mr-2 text-lg" data-type="theme" data-id="96" onclick="HwGen.start();">Start Now</button>
-            </div>
-          </div>
-          <hr class="m-5">
-          <div class="row featurette mb-5">
-            <div class="col-md-12 text-center">
-              <p class="text-lg text-info"><a href="https://lewdev.github.com">👤 Lewis Nakao</a></p>
-              <div class="row m-3">
-                <div class="col-md-2"><a target="_blank" href="https://twitter.com/lewdev">🐦 Twitter</a></div>
-                <div class="col-md-2"><a target="_blank" href="https://github.com/lewdev">🐙 GitHub</a></div>
-                <div class="col-md-2"><a target="_blank" href="https://facebook.com/SWEinHawaii">📘 Facebook</a></div>
-                <div class="col-md-2"><a target="_blank" href="https://www.linkedin.com/in/lewisnakao">👔 LinkedIn</a></div>
-                <div class="col-md-2"><a target="_blank" href="http://stackoverflow.com/cv/lewis.nakao">📚 StackOverflow</a></div>
-                <div class="col-md-2"><a target="_blank" href="https://www.youtube.com/channel/UCewHmEWXdFVyzn-QaZitKBA"> 🎥 YouTube</a></div>
-              </div>
+              <button class="btn btn-wide btn-primary btn-lg my-2 mr-2 text-lg mt-5" data-type="theme" data-id="96" onclick="HwGen.start();">Start Now</button>
             </div>
           </div>
         </div>
@@ -141,53 +125,71 @@
     </div>
   </div>
 
+  <div id="tipsView" class="container no-print mt-2">
+    <table class="w-100"><tbody><tr>
+      <td class="w-100 p-2">
+        <ul class="tip-scroller mb-0">
+          <li>🔎 Use Print Preview feature and set "Zoom" to "Shrink to fit" to ensure best print results.</li>
+          <li>📏 Adjust settings such as margin size to 0.3" optimize print output.</li>
+          <li>📄 Adjust "Worksheets" value to get more worksheets per set of print outs.</li>
+          <li>🗝️ Answer keys are on the last page.</li>
+          <li>🔢 1-digit equations are all possible equations not including 1.</li>
+          <li>😀 Random emojis using <a href="https://twemoji.twitter.com">Twemoji</a> featured on each worksheet in case worksheets mix up.</li>
+        </ul>
+      </td>
+      <td>
+        <button class="btn p-0" onclick="HwGen.nextTip()" title="See next tip.">🔄</button>
+      </td>
+    </tr></tbody></table>
+  </div>
+
+  <div id="breadcrumbView" class="container no-print">
+    <nav aria-label="breadcrumb">
+      <ol id="breadcrumb" class="breadcrumb mt-2"><!-- <li class="breadcrumb-item"><a href="#">Cate</a></li> --></ol>
+    </nav>
+  </div>
+
   <div id="categoriesView" class="container">
-    <div class="row mt-3 mb-3"">
-      <div class="col-12 pr-0">
-        <table class="w-100"><tbody><tr>
-          <td>
-            <ul class="tip-scroller">
-              <li>🔎 Use Print Preview feature and set "Zoom" to "Shrink to fit" to ensure best print results.</li>
-              <li>📏 Adjust settings such as margin size to 0.3" optimize print output.</li>
-              <li>📄 Adjust "Worksheets" value to get more worksheets per set of print outs.</li>
-              <li>🗝️ Answer keys are on the last page.</li>
-              <li>🔢 1-digit equations are all possible equations not including 1.</li>
-              <li>😀 Random emojis using <a href="https://twemoji.twitter.com">Twemoji</a> featured on each worksheet in case worksheets mix up.</li>
-            </ul>
-          </td>
-          <td>
-            <button class="btn p-0" onclick="HwGen.nextTip()" title="See next tip.">➡️</button>
-          </td>
-        </tr></tbody></table>
-        <ul id="categoryTabs" class="col-8 tabs group btn-group"></ul>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-2">
-        <select id="worksheetCount" class="form-control" onchange="HwGen.render()">
-          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option selected>6</option>
-          <option>7</option><option>8</option><option>9</option><option>10</option><option>20</option>
+    <h3>Select a Category</h3>
+    <div id="categorySelectView" class="row mt-3 mb-3""></div>
+  </div>
+
+  <div id="worksheetSelectView" class="container">
+    <div id="worksheetList"></div>
+  </div>
+  
+  <div id="printConfigView" class="container">
+    <div class="row pb-5">
+      <div class="col-md-6 pt-3">
+        <h3>How many worksheets?</h3>
+        <select id="worksheetCount" class="form-control">
+          <option>1</option><option>3</option><option selected>6</option><option>9</option><option>12</option><option>15</option>
         </select>
       </div>
-      <div class="col-2"> Worksheets</div>
-      <table class="table"><tbody id="output"></tbody></table>
+      <div class="col-md-6 pt-3">
+        <label>
+        <table><tbody><tr>
+          <td><div class="p-3"><input id="answerKeyChkbx" class="form-control" type="checkbox" checked/></div></td>
+          <td><h3 title="Uncheck if you want to save paper.">Include the Answer Key?</h3></td>
+        </tr></tbody></table>
+        </label>
+      </div>
+      <div class="col-md-12 pt-3">
+        <div class="w-50 ml-auto mr-auto">
+          <button class="btn btn-lg btn-primary btn-block p-3" onclick="HwGen.preview()">
+            🖨 Preview Worksheets
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div id="worksheetSelectView" style="display: none;">
-    <table class="table"><tbody id="output"></tbody></table>
-    worksheetSelectView
-    <div class="text-center text-muted">
-      Author: <a href="https://lewdev.github.io">Lewis Nakao</a>
-    </div>
-  </div>
-
-  <div id="worksheetView" style="display: none;">
+  <div id="worksheetView">
     <div class="row no-print worksheets-view-panel">
       <div class="col-3">
-        <button class="btn btn-secondary" onclick="HwGen.setWs('');">◀️ Back</button>
+        <button class="btn btn-secondary" onclick="HwGen.printConfig();">◀️ Back</button>
       </div>
-      <div class="col-6 text-center hw-set-info"></div>
+      <div class="col-6 text-center hw-set-info">Preview</div>
       <div class="col-3 text-right">
         <button class="btn btn-secondary" onclick="window.print();">🖨️ Print</button>
       </div>
@@ -209,6 +211,22 @@
     </div>
     <div class="answerKey row"></div>
   </div>
+  
+  <div id="footer" class="row featurette mt-5 mb-5 no-print">
+    <div class="col-md-12 text-center">
+      <hr/>
+      <p class="text-lg text-info"><a href="https://lewdev.github.com">👤 Lewis Nakao</a></p>
+      <div class="row m-3">
+        <div class="col-md-2 text-nowrap pr-0"><a target="_blank" href="https://twitter.com/lewdev">🐦 Twitter</a></div>
+        <div class="col-md-2 text-nowrap pr-0"><a target="_blank" href="https://github.com/lewdev">🐙 GitHub</a></div>
+        <div class="col-md-2 text-nowrap pr-0"><a target="_blank" href="https://facebook.com/SWEinHawaii">📘 Facebook</a></div>
+        <div class="col-md-2 text-nowrap pr-0"><a target="_blank" href="https://www.linkedin.com/in/lewisnakao">👔 LinkedIn</a></div>
+        <div class="col-md-2 text-nowrap pr-0"><a target="_blank" href="http://stackoverflow.com/cv/lewis.nakao">📚 StackOverflow</a></div>
+        <div class="col-md-2 text-nowrap pr-0"><a target="_blank" href="https://www.youtube.com/channel/UCewHmEWXdFVyzn-QaZitKBA"> 🎥 YouTube</a></div>
+      </div>
+    </div>
+  </div>
+
   <div id="about" class="modal-window no-print">
     <div>
       <a href="#" title="Close" class="modal-close">&#10006;</a>
