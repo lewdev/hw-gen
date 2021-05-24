@@ -130,7 +130,7 @@ const HwGen = (() => {
         </div>
         <div class="col-1">e.g.</div>
         <div class="col-md-5" style="width:10rem;">
-          <table><tbody><tr class="example">${eqStr}</tr></tbody></table>
+          <table><tbody><tr class="example${long ? ' long' : ''}">${eqStr}</tr></tbody></table>
         </div>
       </div>`;
       }).join("");

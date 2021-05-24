@@ -43,8 +43,15 @@ img.emoji {
 .my-table.table > tbody > tr:last-child {
   border-bottom: 0;
 }
+
 .equation {
   width: 6rem;
+  letter-spacing: 1rem;
+  text-align: right;
+  white-space: nowrap;
+}
+.vert-equation {
+  letter-spacing: 1rem;
   text-align: right;
   white-space: nowrap;
 }
@@ -56,15 +63,18 @@ tr.example > td { padding:.75rem; text-align: right; border-top: 0 !important; }
 .example > td .equation { width: 4rem !important; }
 .example > td.pb-5 { padding-bottom: 0 !important; padding-top: 0; }
 .example .answer-input.down, .example .answer-input { width: 2rem; }
+.example .vert-equation > .answer-input { width: 10rem; }
 .answer { width: 5rem; }
 .text-input { border: 0px; border-bottom: 3px solid black; }
 tr.example.long > td > div.equation > .answer-input { width: 3.5rem; }
+tr.example.long > td > div.vert-equation > .answer-input { width: 8rem; }
 tr.long > td > div.equation { width: 8rem; }
-tr.long > td > div.equation > .answer-input { width: 6rem; }
+tr.long > td > div.equation > .answer-input { width: 8rem; }
+tr.long > td > div.vert-equation > .answer-input { width: 10rem; }
 .answer-input {
   border: 0px;
   border-top: 3px solid black;
-  width: 5rem;
+  width: 6rem;
   text-align: right;
 }
 .answer-input.down {

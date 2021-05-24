@@ -1,9 +1,9 @@
 const verticalEq = (eq, i, columns, mathSym, long, answerSpace) => `
   <td class="text-muted number text-right">${i + 1}.)</td>
-  <td class="pb-5">
-    <div class="equation">${eq.x}</div>
-    <div class="equation">${mathSym} ${eq.y}</div>
-    <div class="equation" ${answerSpace ? `style="margin-bottom:${answerSpace}rem;"`:''}><input type="text" class="answer-input"/></div>
+  <td class="pb-5 pt-3">
+    <div class="vert-equation">${eq.x}</div>
+    <div class="vert-equation">${mathSym} ${eq.y}</div>
+    <div class="vert-equation" ${answerSpace ? `style="margin-bottom:${answerSpace}rem;"`:''}><input type="text" class="answer-input"/></div>
   </td>
   ${((i + 1) % columns) === 0 ? `</tr><tr${long ? ' class="long"' : ''}>` : ''}`
   /**
@@ -15,9 +15,9 @@ const verticalEq = (eq, i, columns, mathSym, long, answerSpace) => `
   , verticalEqZX_ = (eq, i, columns, mathSym, long) => `
     <td class="text-muted number"><span class="mr-2">${i + 1}.)</span></td>
     <td class="pb-5">
-      <div class="equation">${eq.z}</div>
-      <div class="equation">${mathSym} ${eq.x}</div>
-      <div class="equation"><input type="text" class="answer-input"/></div>
+      <div class="vert-equation">${eq.z}</div>
+      <div class="vert-equation">${mathSym} ${eq.x}</div>
+      <div class="vert-equation"><input type="text" class="answer-input"/></div>
     </td>
     ${((i + 1) % columns) === 0 ? `</tr><tr${long ? ' class="long"' : ''}>` : ''}`
   , horizontalEq = (eq, i, columns, mathSym) => `
@@ -36,7 +36,7 @@ const verticalEq = (eq, i, columns, mathSym, long, answerSpace) => `
     </tr><tr>
     <td class="text-center align-bottom" style="border-top:0;"><input type="text" class="answer-input down"/></td>
     <td class="text-center align-bottom" style="border-top:0;"><input type="text" class="answer-input down"/></td>
-    ${((i + 1) % 5) === 0 ? `</tr></tbody><div class="page-break"></div><table><tbody><tr>` : '</tr><tr style="border-top: 3px solid gray;">'}`
+    ${((i + 1) % 5) === 0 ? `</tr></tbody><div class="page-break"></div><table><tbody><tr>` : '</tr><tr style="border-top: 3px dotted gray;">'}`
   /**
    * Solve:
    *   x mathSym ___ = y
