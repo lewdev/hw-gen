@@ -3,8 +3,8 @@ const countable = "⚽️ 🏀 🏈 ⚾️ 🥎 🎾 🏐 🚗 🚕 🚙 🚌 �
 const rand = max => Math.floor(Math.random() * max);
 const randRange = (min, max) => rand(max - min) + min;
 const randArr = arr => arr[rand(arr.length)];
-const singleDigits = [2,3,4,5,6,7,8,9];
-const randNoOnes = () => randArr(singleDigits);
+const SINGLE_DIGITS = [2,3,4,5,6,7,8,9];
+const randNoOnes = () => randArr(SINGLE_DIGITS);
 const randRangeByDigits = digits => {
   if (digits === 1) return randNoOnes();
   if (digits < 1) return randRange(1, digits * 10);

@@ -16,11 +16,13 @@ Generate print-friendly homework worksheets for math practice.
 * 🔢 1-digit equations are all possible equations not including 1.
 * 😀 Emojis using [Twemoji](https://twemoji.twitter.com)
 
+# Recently Implemented
+* Make each number more spaced apart so they align. (5/24/2021)
+* Long division (5/24/2021)
+
 # Next Features
-* Make each number more spaced apart so they align.
 * Top navigation when viewing worksheets (nav pages, toggle answer key, re-randomize)
 * Word Problems
-* Long division
 * Fractions and Decimals
 * Order of Operations
 * Measuring Area, Perimeter, and Volume

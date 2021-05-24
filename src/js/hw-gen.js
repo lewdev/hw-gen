@@ -34,16 +34,16 @@ const HwGen = (() => {
     const z = solution(x, y, mathSymbol);
     return { x, y, z };
   };
-  const generate = (xSize, ySize, mathSymbol, count, useAllPossible1Digit) => {
+  const generate = (xSize, ySize, mathSymbol, count, useAllPossible1Digit, myGenEq) => {
     const arr = [];
     if (useAllPossible1Digit) {
-      singleDigits.map(x => singleDigits.map(y => arr.push({ x, y, z: solution(x, y, mathSymbol) })));
+      SINGLE_DIGITS.map(x => SINGLE_DIGITS.map(y => arr.push({ x, y, z: solution(x, y, mathSymbol) })));
       arr.sort(() => Math.random() - 0.5); //shuffle
       arr.sort(() => Math.random() - 0.5); //shuffle
     }
     else {
       for (let i = 0; i < count; i++) {
-        arr.push(genEquation(xSize, ySize, mathSymbol));
+        arr.push(myGenEq ? myGenEq() : genEquation(xSize, ySize, mathSymbol));
       }
     }
     return arr;
@@ -116,8 +116,8 @@ const HwGen = (() => {
     }
     worksheetList.innerHTML = `<h3>Select ${data["selectedCat"]} Worksheet</h3>` +
       hwMap[data["selectedCat"]].map((hwSet, i) => {
-        const {title, xSize, ySize, mathSymbol, outputFunc, count, name, long, useAllPossible1Digit} = hwSet;
-        const eq = genEquation(xSize, ySize, mathSymbol);
+        const {title, xSize, ySize, mathSymbol, outputFunc, count, name, long, useAllPossible1Digit, myGenEq} = hwSet;
+        const eq = myGenEq ? myGenEq() : genEquation(xSize, ySize, mathSymbol);
         const eqStr = outputFunc(eq, -1, 0, long);
         return `${i === 0 ? '' : '<hr/>'}<div class="row">
         <div class="col-1 text-right pr-0 text-sm">
@@ -148,19 +148,19 @@ const HwGen = (() => {
       alert(`Worksheet set doesn't exist ${data['selectedSet']} `);
       return;
     }
-    const { title, count, columns, xSize, ySize, mathSymbol, outputFunc, answerKey, long, answerSpace, useAllPossible1Digit } = hwSet
+    const { title, count, columns, xSize, ySize, mathSymbol, outputFunc, answerKey, long, answerSpace, useAllPossible1Digit, myGenEq } = hwSet;
     worksheetsDiv.innerHTML = "";
     for (let i = 0; i < data['selectedCount']; i++) {
       const worksheet = worksheetOrig.cloneNode(true)
         , output = worksheet.querySelector(".output")
-        , arr = generate(xSize, ySize, mathSymbol, count, useAllPossible1Digit)
+        , arr = generate(xSize, ySize, mathSymbol, count, useAllPossible1Digit, myGenEq)
         , titleDiv = worksheet.querySelector(".title")
         , outputStr = arr.map((eq, i) => outputFunc(eq, i, columns, long, answerSpace)).join("")
         , emoji = randArr(emojis)
       ;
       allAnswerKeys.push(`<div class="answer-key-table col-${long ? 6 : 4}">
         <div class="font-weight-bold">${emoji} ${title} #${i + 1}</div>
-        <div class="row">${arr.map(answerKey).map((a, i) =>
+        <div class="row">${arr.map(answerKey || function(eq) {return eq.z}).map((a, i) =>
       `<div class="text-nowrap col-${Math.floor(12 / columns)}">${i + 1}.) ${a}</div>`).join("")}</div></div>`);
       titleDiv.innerHTML = `${emoji} ${title} #${i + 1}`;
       output.innerHTML = `<tr${long ? ' class="long"' : ''}>${outputStr}</tr>`;
