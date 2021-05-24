@@ -55,6 +55,30 @@ img.emoji {
   text-align: right;
   white-space: nowrap;
 }
+.long-div { padding-bottom: 8rem; }
+.long-div.er > div > .answer-input { width: 10rem; }
+.long-div > div > .answer-input {
+  border-top: 0;
+  border-bottom: 3px solid black;
+  text-align: right;
+  margin-left: -1.7rem;
+  width: 8rem;
+}
+.long-div.er { padding-bottom: 10rem; }
+.long-div.er > div > .answer-input {
+  width: 10rem;
+}
+.long-div-divisor {
+  border-right: 3px solid black;
+  border-radius: 1rem;
+  text-align: right;
+}
+.long-div-numerator {
+  letter-spacing: 1rem;
+  white-space: nowrap;
+  text-align: left;
+}
+.example > td > .long-div { padding-bottom: 0; }
 .example .number { display: none; }
 .example .emoji { font-size: 1rem; border-top: 0; }
 .example > td.answer { text-align: left; padding-left:0; }
@@ -64,6 +88,7 @@ tr.example > td { padding:.75rem; text-align: right; border-top: 0 !important; }
 .example > td.pb-5 { padding-bottom: 0 !important; padding-top: 0; }
 .example .answer-input.down, .example .answer-input { width: 2rem; }
 .example .vert-equation > .answer-input { width: 10rem; }
+.example .vert-equation.md > .answer-input { width: 5rem; }
 .answer { width: 5rem; }
 .text-input { border: 0px; border-bottom: 3px solid black; }
 tr.example.long > td > div.equation > .answer-input { width: 3.5rem; }
@@ -74,6 +99,7 @@ tr.long > td > div.vert-equation > .answer-input { width: 10rem; }
 .answer-input {
   border: 0px;
   border-top: 3px solid black;
+  letter-spacing: 1rem;
   width: 6rem;
   text-align: right;
 }

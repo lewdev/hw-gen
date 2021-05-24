@@ -3,7 +3,7 @@ const verticalEq = (eq, i, columns, mathSym, long, answerSpace) => `
   <td class="pb-5 pt-3">
     <div class="vert-equation">${eq.x}</div>
     <div class="vert-equation">${mathSym} ${eq.y}</div>
-    <div class="vert-equation" ${answerSpace ? `style="margin-bottom:${answerSpace}rem;"`:''}><input type="text" class="answer-input"/></div>
+    <div class="vert-equation md" ${answerSpace ? `style="margin-bottom:${answerSpace}rem;"`:''}><input type="text" class="answer-input"/></div>
   </td>
   ${((i + 1) % columns) === 0 ? `</tr><tr${long ? ' class="long"' : ''}>` : ''}`
   /**
@@ -25,6 +25,17 @@ const verticalEq = (eq, i, columns, mathSym, long, answerSpace) => `
       <span class="number">${i + 1}.)</span>${eq.x} ${mathSym} ${eq.y} =
     </td>
     <td class="answer"><input type="text" class="answer-input down"/></td>
+    ${((i + 1) % columns) === 0 ? '</tr><tr>' : ''}`
+  , longDivEq = (eq, i, columns, longer) => `
+    <td class="text-muted number"><span class="mr-2">${i + 1}.)</span></td>
+    <td>
+      <div class="row long-div${longer ? ' er' : ''}">
+        <div class="col-4"></div>
+        <div class="col-8 text-left"><input type="text" class="answer-input"/></div>
+        <div class="col-4 long-div-divisor">${eq.x}</div>
+        <div class="col-8 long-div-numerator">${eq.z}</div>
+      </div>
+    </td>
     ${((i + 1) % columns) === 0 ? '</tr><tr>' : ''}`
   , visualAddition = (eq, i, columns, mathSym, emoji) => `
     <td rowspan="2" style="height: 10rem;"><div class="number" style="height: 12rem;">${i + 1}.)</div></td>
@@ -68,7 +79,6 @@ const hwSets = {
     xSize: 1, ySize: 1,
     mathSymbol: "+",
     outputFunc: (eq, i, columns) => horizontalEq(eq, i, columns, "+"),
-    answerKey: eq => eq.z,
   },
   "addition-visual-1": {
     title: "Addition Visual Equations Level 1 (1-6)", category: "Addition",
@@ -76,7 +86,6 @@ const hwSets = {
     xSize: .6, ySize: .6,
     mathSymbol: "+",
     outputFunc: (eq, i) => visualAddition(eq, i, 0, "+", randArr(countable)),
-    answerKey: eq => eq.z,
   },
   "addition-visual-2": {
     title: "Addition Visual Equations Level 2", category: "Addition",
@@ -84,7 +93,6 @@ const hwSets = {
     xSize: 1, ySize: 1,
     mathSymbol: "+",
     outputFunc: (eq, i) => visualAddition(eq, i, 0, "+", randArr(countable)),
-    answerKey: eq => eq.z,
   },
   "addition-find-addends": {
     title: "Addition Find Addend Equations", category: "Addition",
@@ -92,42 +100,36 @@ const hwSets = {
     useAllPossible1Digit: true,
     xSize: 1, ySize: 1, mathSymbol: "+",
     outputFunc: (eq, i, columns) => horizontalEqX_Y(eq, i, columns, "+"),
-    answerKey: eq => eq.y,
   },
   "addition-2-1": {
     title: "Addition 2-1-digit Equations", category: "Addition",
     count: 44, columns: 4,
     xSize: 2, ySize: 1, mathSymbol: "+",
     outputFunc: (eq, i, columns) => verticalEq(eq, i, columns, "+"),
-    answerKey: eq => eq.z,
   },
   "addition-2-2": {
     title: "Addition 2-digit Equations", category: "Addition",
     count: 44, columns: 4,
     xSize: 2, ySize: 2, mathSymbol: "+",
     outputFunc: (eq, i, columns) => verticalEq(eq, i, columns, "+"),
-    answerKey: eq => eq.z,
   },
   "addition-3-3": {
     title: "Addition 3-digit Equations", category: "Addition",
     count: 44, columns: 4, long: true,
     xSize: 3, ySize: 3, mathSymbol: "+",
     outputFunc: (eq, i, columns, long) => verticalEq(eq, i, columns, "+", long),
-    answerKey: eq => eq.z,
   },
   "addition-4-4": {
     title: "Addition 4-digit Equations", category: "Addition",
     count: 44, columns: 4, long: true,
     xSize: 4, ySize: 4, mathSymbol: "+",
     outputFunc: (eq, i, columns, long) => verticalEq(eq, i, columns, "+", long),
-    answerKey: eq => eq.z,
   },
   "addition-5-5": {
     title: "Addition 5-digit Equations", category: "Addition",
     count: 44, columns: 4, long: true,
     xSize: 5, ySize: 5, mathSymbol: "+",
     outputFunc: (eq, i, columns, long) => verticalEq(eq, i, columns, "+", long),
-    answerKey: eq => eq.z,
   },
   "subtraction": {
     title: "Subtraction 1-digit Equations", category: "Subtraction",
@@ -180,7 +182,6 @@ const hwSets = {
     useAllPossible1Digit: 1,
     mathSymbol: "*",
     outputFunc: (eq, i, columns) => horizontalEq(eq, i, columns, "&times;"),
-    answerKey: eq => eq.z,
   },
   "multiplication-find-multiple": {
     title: "Multiplication Find Multiple Equations", category: "Multiplication",
@@ -189,7 +190,18 @@ const hwSets = {
     useAllPossible1Digit: 1,
     mathSymbol: "*",
     outputFunc: (eq, i, columns) => horizontalEqX_Y(eq, i, columns, "&times;"),
-    answerKey: eq => eq.z,
+  },
+  "multiplication-11-13": {
+    title: "Multiplication with 11 to 13 Equations", category: "Multiplication",
+    count: 64, columns: 3,
+    mathSymbol: "*",
+    myGenEq: () => {
+      const x = randRange(11, 14);
+      const y = randNoOnes();
+      const z = x * y;
+      return { x, y, z };
+    },
+    outputFunc: (eq, i, columns) => horizontalEq(eq, i, columns, "&times;"),
   },
   "multiplication-2-1": {
     title: "Muliplication 2 to 1-digit Equations", category: "Multiplication",
@@ -197,7 +209,6 @@ const hwSets = {
     xSize: 2, ySize: 1,
     mathSymbol: "*",
     outputFunc: (eq, i, columns) => verticalEq(eq, i, columns, "&times;"),
-    answerKey: eq => eq.z,
   },
   "multiplication-2-2": {
     title: "Muliplication 2-digit Equations", category: "Multiplication",
@@ -205,7 +216,6 @@ const hwSets = {
     xSize: 2, ySize: 2,
     mathSymbol: "*",
     outputFunc: (eq, i, columns, long, answerSpace) => verticalEq(eq, i, columns, "&times;", long, answerSpace),
-    answerKey: eq => eq.z,
   },
   "multiplication-3": {
     title: "Muliplication 3-digit Equations", category: "Multiplication",
@@ -213,7 +223,6 @@ const hwSets = {
     xSize: 3, ySize: 3,
     mathSymbol: "*",
     outputFunc: (eq, i, columns, long, answerSpace) => verticalEq(eq, i, columns, "&times;", long, answerSpace),
-    answerKey: eq => eq.z,
   },
   "division": {
     title: "Division 1-digit Equations", category: "Division",
@@ -223,5 +232,68 @@ const hwSets = {
     mathSymbol: "*",
     outputFunc: (eq, i, columns) => horizontalEqZX_(eq, i, columns, "&divide;"),
     answerKey: eq => eq.y,
+  },
+  "division": {
+    title: "Division 1-digit Equations", category: "Division",
+    count: 64, columns: 3,
+    xSize: 1, ySize: 1,
+    useAllPossible1Digit: 1,
+    mathSymbol: "*",
+    outputFunc: (eq, i, columns) => horizontalEqZX_(eq, i, columns, "&divide;"),
+    answerKey: eq => eq.y,
+  },
+  "division-long": {
+    title: "Long Division Equations", category: "Division",
+    count: 27, columns: 3,
+    mathSymbol: "*",
+    myGenEq: () => {
+      const x = randNoOnes();
+      const y = randRangeByDigits(2);
+      const z = x * y;
+      return { x, y, z };
+    },
+    outputFunc: (eq, i, columns) => longDivEq(eq, i, columns),
+    answerKey: eq => eq.y,
+  },
+  "division-longer": {
+    title: "Longer Division Equations", category: "Division",
+    count: 24, columns: 3,
+    mathSymbol: "*",
+    myGenEq: () => {
+      const x = randNoOnes();
+      const y = randRangeByDigits(3);
+      const z = x * y;
+      return { x, y, z };
+    },
+    outputFunc: (eq, i, columns) => longDivEq(eq, i, columns, true),
+    answerKey: eq => eq.y,
+  },
+  "division-long-remainders": {
+    title: "Long Division w/Remainders Equations", category: "Division",
+    count: 27, columns: 3,
+    mathSymbol: "*",
+    myGenEq: () => {
+      const x = randNoOnes();
+      const y = randRangeByDigits(2);
+      const remainder = rand(x - 1) + 1;
+      const z = (x * y) + remainder;
+      return { x, y, z, remainder};
+    },
+    outputFunc: (eq, i, columns) => longDivEq(eq, i, columns),
+    answerKey: eq => `${eq.y} r. ${eq.remainder}`,
+  },
+  "division-longer-remainders": {
+    title: "Longer Division w/Remainders Equations", category: "Division",
+    count: 24, columns: 3,
+    mathSymbol: "*",
+    myGenEq: () => {
+      const x = randNoOnes();
+      const y = randRangeByDigits(3);
+      const remainder = rand(x - 1) + 1;
+      const z = (x * y) + remainder;
+      return { x, y, z, remainder};
+    },
+    outputFunc: (eq, i, columns) => longDivEq(eq, i, columns, true),
+    answerKey: eq => `${eq.y} r. ${eq.remainder}`,
   },
 };
