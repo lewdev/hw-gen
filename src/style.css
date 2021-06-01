@@ -1,3 +1,5 @@
+
+tr.example > td.multi-vis-emoji > div { width: 100% !important }
 .tip-scroller { padding-left: 0; }
 .tip-scroller > li { list-style: none; }
 .breadcrumb-list > li { list-style: none; }
@@ -114,6 +116,11 @@ tr.long > td > div.vert-equation > .answer-input { width: 10rem; }
 @media print {
   .no-print { display: none; }
   body { margin: 0; font-size: 4px; }
+  .multi-vis > tbody > tr > td {
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid black !important;
+  }
 }
 @media (max-width: 500px) {
   body { margin: .3rem; }

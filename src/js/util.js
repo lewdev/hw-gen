@@ -42,3 +42,6 @@ const setUrlParam = param => {
 const strXTimes = (str, x) => {
   return new Array(x).fill().map((a, i) => str + (i > 0 && i % 4 === 0 ? '<br/>' : '')).join("")
 };
+const repeat = (str, x) => {
+  return new Array(x).fill().map(() => str).join("")
+};

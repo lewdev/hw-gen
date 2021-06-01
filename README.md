@@ -11,14 +11,17 @@ Generate print-friendly homework worksheets for math practice.
 * 🈚 Free w/no ads
 * 🖨️ Print-friendly
 * 🗝️ Answer key on last page.
-* 📝 Many worksheet types, all randomized for near-infinite iterations 
+* 📝 Many worksheet types, all randomized for near-infinite iterations
 * 👨‍💻 Open source
 * 🔢 1-digit equations are all possible equations not including 1.
 * 😀 Emojis using [Twemoji](https://twemoji.twitter.com)
 
 # Recently Implemented
-* Make each number more spaced apart so they align. (5/24/2021)
-* Long division (5/24/2021)
+* 5/31/2021 - Visual Multiplication Equations
+* 5/24/2021 - Number spacing and long division equations
+  * Make each number more spaced apart so they align.
+  * Long division and with remainder
+
 
 # Next Features
 * Top navigation when viewing worksheets (nav pages, toggle answer key, re-randomize)
