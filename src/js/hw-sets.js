@@ -37,6 +37,33 @@ const verticalEq = (eq, i, columns, mathSym, long, answerSpace) => `
       </div>
     </td>
     ${((i + 1) % columns) === 0 ? '</tr><tr>' : ''}`
+  , visualMultiEq = (eq, i, columns) => `
+    <td class="text-muted number"><span class="mr-2">${i + 1}.)</span></td>
+    <td>
+      <svg width="272px" height="272px" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="smallGrid" width="30" height="30" patternUnits="userSpaceOnUse">
+            <path d="M 30 0 L 0 0 0 30" fill="none" stroke="gray" stroke-width="3" />
+          </pattern>
+        </defs>
+        <rect width="272px" height="272px" fill="url(#smallGrid)" />
+      </svg>
+      <div class="equation mt-4 mb-4">
+        ${eq.x} &times; ${eq.y} = <input type="text" class="answer-input down"/>
+      </div>
+    </td>
+    ${((i + 1) % columns) === 0 ? '</tr><tr style="border-top: 3px dotted gray;">' : ''}`
+  , visualEmojiMultiEq = (eq, i, columns) => `
+    <td class="text-muted number"><span class="mr-2">${i + 1}.)</span></td>
+    <td class="text-center multi-vis-emoji">
+      <div class="row" style="width: 28rem; height: 10rem;">
+        ${repeat(`<div class="col-${12 / eq.x} text-center">${repeat(randArr(emojis), eq.y)}</div>`, eq.x)}
+      </div>
+      <div class="equation mt-4 mb-4">
+        ${eq.x} &times; ${eq.y} = <input type="text" class="answer-input down"/>
+      </div>
+    </td>
+    ${((i + 1) % columns) === 0 ? '</tr><tr>' : ''}`
   , visualAddition = (eq, i, columns, mathSym, emoji) => `
     <td rowspan="2" style="height: 10rem;"><div class="number" style="height: 12rem;">${i + 1}.)</div></td>
     <td class="text-center align-middle">${strXTimes(`<span class="emoji mr-2 text-lg">${emoji}</span>`, eq.x)}</td>
@@ -175,6 +202,36 @@ const hwSets = {
     outputFunc: (eq, i, columns, long) => verticalEqZX_(eq, i, columns, "-", long),
     answerKey: eq => eq.y,
   },
+  "multiplication-vis-emoji": {
+    title: "Muliplication Visual Emoji Equations", category: "Multiplication",
+    count: 16, columns: 2,
+    xSize: 1, ySize: 1,
+    myGenEq: () => {
+      const x = randArr([2,3,4]);
+      const y = randArr([1,2,3,4,5]);
+      const z = x * y;
+      return { x, y, z };
+    },
+    outputFunc: (eq, i, columns) => visualEmojiMultiEq(eq, i, columns),
+  },
+  "multiplication-vis-1": {
+    title: "Muliplication Visual Lvl 1 Equations", category: "Multiplication",
+    count: 18, columns: 2,
+    xSize: 1, ySize: 1,
+    myGenEq: () => {
+      const x = randArr([2,3,4,5,6]);
+      const y = randArr([2,3,4,5,6]);
+      const z = x * y;
+      return { x, y, z };
+    },
+    outputFunc: (eq, i, columns) => visualMultiEq(eq, i, columns, 6),
+  },
+  "multiplication-vis-2": {
+    title: "Muliplication Visual Lvl 2 Equations", category: "Multiplication",
+    count: 18, columns: 2,
+    xSize: 1, ySize: 1,
+    outputFunc: (eq, i, columns) => visualMultiEq(eq, i, columns, 8),
+  },
   "multiplication": {
     title: "Multiplication 1-digit Equations", category: "Multiplication",
     count: 64, columns: 3,
@@ -245,7 +302,6 @@ const hwSets = {
   "division-long": {
     title: "Long Division Equations", category: "Division",
     count: 27, columns: 3,
-    mathSymbol: "*",
     myGenEq: () => {
       const x = randNoOnes();
       const y = randRangeByDigits(2);
@@ -258,7 +314,6 @@ const hwSets = {
   "division-longer": {
     title: "Longer Division Equations", category: "Division",
     count: 24, columns: 3,
-    mathSymbol: "*",
     myGenEq: () => {
       const x = randNoOnes();
       const y = randRangeByDigits(3);
