@@ -35,11 +35,12 @@ const HwGen = (() => {
     return { x, y, z };
   };
   const generate = (xSize, ySize, mathSymbol, count, useAllPossible1Digit, myGenEq) => {
-    const arr = [];
+    let arr = [];
     if (useAllPossible1Digit) {
       SINGLE_DIGITS.map(x => SINGLE_DIGITS.map(y => arr.push({ x, y, z: solution(x, y, mathSymbol) })));
       arr.sort(() => Math.random() - 0.5); //shuffle
       arr.sort(() => Math.random() - 0.5); //shuffle
+      if (count < arr.length) arr = arr.slice(0, count);
     }
     else {
       for (let i = 0; i < count; i++) {
@@ -67,7 +68,7 @@ const HwGen = (() => {
       if (screenshotNum > 5) screenshotNum = 1;
     }, 2000);
   };
-  const addBreadcrumb = (arr, action, label, selected) => 
+  const addBreadcrumb = (arr, action, label, selected) =>
     arr.push(`<li class="breadcrumb-item">${selected ? label :  `<a href="#" onclick="${action} return false;">${label}</a>`}</li>`);
   const renderBreadcrumb = () => {
     const arr = [];

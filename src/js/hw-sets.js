@@ -216,7 +216,7 @@ const hwSets = {
   },
   "multiplication-vis-1": {
     title: "Muliplication Visual Lvl 1 Equations", category: "Multiplication",
-    count: 18, columns: 2,
+    count: 16, columns: 2,
     xSize: 1, ySize: 1,
     myGenEq: () => {
       const x = randArr([2,3,4,5,6]);
@@ -228,7 +228,7 @@ const hwSets = {
   },
   "multiplication-vis-2": {
     title: "Muliplication Visual Lvl 2 Equations", category: "Multiplication",
-    count: 18, columns: 2,
+    count: 16, columns: 2,
     xSize: 1, ySize: 1,
     outputFunc: (eq, i, columns) => visualMultiEq(eq, i, columns, 8),
   },
@@ -290,14 +290,27 @@ const hwSets = {
     outputFunc: (eq, i, columns) => horizontalEqZX_(eq, i, columns, "&divide;"),
     answerKey: eq => eq.y,
   },
-  "division": {
-    title: "Division 1-digit Equations", category: "Division",
-    count: 64, columns: 3,
+  "division-box": {
+    title: "Division Box Format Equations", category: "Division",
+    count: 36, columns: 4,
     xSize: 1, ySize: 1,
     useAllPossible1Digit: 1,
     mathSymbol: "*",
-    outputFunc: (eq, i, columns) => horizontalEqZX_(eq, i, columns, "&divide;"),
+    outputFunc: (eq, i, columns) => longDivEq(eq, i, columns),
     answerKey: eq => eq.y,
+  },
+  "division-box-remainders": {
+    title: "Division Box Format w/Remainders Equations", category: "Division",
+    count: 27, columns: 3,
+    myGenEq: () => {
+      const x = randNoOnes();
+      const y = randNoOnes();
+      const remainder = rand(x - 1) + 1;
+      const z = (x * y) + remainder;
+      return { x, y, z, remainder};
+    },
+    outputFunc: (eq, i, columns) => longDivEq(eq, i, columns),
+    answerKey: eq => `${eq.y} r. ${eq.remainder}`,
   },
   "division-long": {
     title: "Long Division Equations", category: "Division",
@@ -326,7 +339,6 @@ const hwSets = {
   "division-long-remainders": {
     title: "Long Division w/Remainders Equations", category: "Division",
     count: 27, columns: 3,
-    mathSymbol: "*",
     myGenEq: () => {
       const x = randNoOnes();
       const y = randRangeByDigits(2);
