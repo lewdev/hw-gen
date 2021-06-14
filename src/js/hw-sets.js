@@ -101,7 +101,7 @@ const verticalEq = (eq, i, columns, mathSym, long, answerSpace) => `
 const hwSets = {
   "addition": {
     title: "Addition 1-digit Equations", category: "Addition",
-    count: 20, columns: 3,
+    columns: 4,
     useAllPossible1Digit: true,
     xSize: 1, ySize: 1,
     mathSymbol: "+",
@@ -160,7 +160,7 @@ const hwSets = {
   },
   "subtraction": {
     title: "Subtraction 1-digit Equations", category: "Subtraction",
-    count: 64, columns: 3,
+    count: 64, columns: 4,
     xSize: 1, ySize: 1,
     useAllPossible1Digit: 1,
     mathSymbol: "+",
@@ -234,7 +234,7 @@ const hwSets = {
   },
   "multiplication": {
     title: "Multiplication 1-digit Equations", category: "Multiplication",
-    count: 64, columns: 3,
+    count: 64, columns: 4,
     xSize: 1, ySize: 1,
     useAllPossible1Digit: 1,
     mathSymbol: "*",
@@ -283,7 +283,7 @@ const hwSets = {
   },
   "division": {
     title: "Division 1-digit Equations", category: "Division",
-    count: 64, columns: 3,
+    count: 64, columns: 4,
     xSize: 1, ySize: 1,
     useAllPossible1Digit: 1,
     mathSymbol: "*",
