@@ -59,9 +59,12 @@ const verticalEq = (eq, i, columns, mathSym, long, answerSpace) => `
     ${((i + 1) % columns) === 0 ? '</tr><tr>' : ''}`
   , multiAddEq = (eq, i, columns) => `
     <td class="text-muted number"><span class="mr-2">${i + 1}.)</span></td>
-    <td class="text-center multi-vis-emoji">
-      <div class="grid"></div>
-      <div class="equation mt-2 mb-2">
+    <td>
+      <div class="text-nowrap">
+        ${repeat(`+ <input type="text" class="answer-input down"/>`, eq.y).substr(2)}
+      </div>
+      <div style="height: 15rem;"></div>
+      <div class="equation mt-4 mb-2">
         ${eq.x} &times; ${eq.y} = <input type="text" class="answer-input down"/>
       </div>
     </td>
@@ -234,10 +237,24 @@ const hwSets = {
     xSize: 1, ySize: 1,
     outputFunc: (eq, i, columns) => visualMultiEq(eq, i, columns, 8),
   },
-  "multiplication-add-2": {
+  "multiplication-add-1": {
     title: "Muliplication Add Equations", category: "Multiplication",
-    count: 16, columns: 2,
-    xSize: 1, ySize: 1,
+    count: 16, columns: 1,
+    myGenEq: () => {
+      const x = randArr([6,7,8,9]);
+      const y = randArr([3,4,5]);
+      const z = x * y;
+      return { x, y, z };
+    },
+    myGenEqList: () => {
+      const xList = [6,7,8,9];
+      const yList = [3,4,5];
+      const eqList = [];
+      xList.forEach(x => yList.forEach( y => eqList.push({x, y, z: x * y})));
+      eqList.sort(() => Math.random() - 0.5); //shuffle
+      eqList.sort(() => Math.random() - 0.5); //shuffle
+      return eqList
+    },
     outputFunc: (eq, i, columns) => multiAddEq(eq, i, columns, 8),
   },
   "multiplication": {

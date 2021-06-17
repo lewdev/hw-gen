@@ -149,19 +149,19 @@ const HwGen = (() => {
       alert(`Worksheet set doesn't exist ${data['selectedSet']} `);
       return;
     }
-    const { title, count, columns, xSize, ySize, mathSymbol, outputFunc, answerKey, long, answerSpace, useAllPossible1Digit, myGenEq } = hwSet;
+    const { title, count, columns, xSize, ySize, mathSymbol, myGenEqList, outputFunc, answerKey, long, answerSpace, useAllPossible1Digit, myGenEq } = hwSet;
     worksheetsDiv.innerHTML = "";
     for (let i = 0; i < data['selectedCount']; i++) {
       const worksheet = worksheetOrig.cloneNode(true)
         , output = worksheet.querySelector(".output")
-        , arr = generate(xSize, ySize, mathSymbol, count, useAllPossible1Digit, myGenEq)
+        , eqList = myGenEqList ? myGenEqList() : generate(xSize, ySize, mathSymbol, count, useAllPossible1Digit, myGenEq)
         , titleDiv = worksheet.querySelector(".title")
-        , outputStr = arr.map((eq, i) => outputFunc(eq, i, columns, long, answerSpace)).join("")
+        , outputStr = eqList.map((eq, i) => outputFunc(eq, i, columns, long, answerSpace)).join("")
         , emoji = randArr(emojis)
       ;
       allAnswerKeys.push(`<div class="answer-key-table col-${long ? 6 : 4}">
         <div class="font-weight-bold">${emoji} ${title} #${i + 1}</div>
-        <div class="row">${arr.map(answerKey || function(eq) {return eq.z}).map((a, i) =>
+        <div class="row">${eqList.map(answerKey || function(eq) {return eq.z}).map((a, i) =>
       `<div class="text-nowrap col-${Math.floor(12 / columns)}">${i + 1}.) ${a}</div>`).join("")}</div></div>`);
       titleDiv.innerHTML = `${emoji} ${title} #${i + 1}`;
       output.innerHTML = `<tr${long ? ' class="long"' : ''}>${outputStr}</tr>`;

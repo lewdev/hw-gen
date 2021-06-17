@@ -17,6 +17,7 @@ Generate print-friendly homework worksheets for math practice.
 * 😀 Emojis using [Twemoji](https://twemoji.twitter.com)
 
 # Recently Implemented
+* 6/17/2021 - Multiplication Add Equations, fix Multiplicatino Visual grids.
 * 5/31/2021 - Visual Multiplication Equations
 * 5/24/2021 - Number spacing and long division equations
   * Make each number more spaced apart so they align.
