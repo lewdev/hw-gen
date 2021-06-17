@@ -24,9 +24,8 @@ Generate print-friendly homework worksheets for math practice.
 
 
 # Next Features
-* Top navigation when viewing worksheets (nav pages, toggle answer key, re-randomize)
-* Word Problems
 * Fractions and Decimals
+* Word Problems
 * Order of Operations
 * Measuring Area, Perimeter, and Volume
 * Measurement conversions

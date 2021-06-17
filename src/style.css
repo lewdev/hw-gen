@@ -1,4 +1,8 @@
-
+.grid-tbl > tbody > tr > td {
+  width: 25px;
+  height: 25px;
+  border: 2px solid gray;
+}
 tr.example > td.multi-vis-emoji > div { width: 100% !important }
 .tip-scroller { padding-left: 0; }
 .tip-scroller > li { list-style: none; }

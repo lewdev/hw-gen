@@ -40,15 +40,8 @@ const verticalEq = (eq, i, columns, mathSym, long, answerSpace) => `
   , visualMultiEq = (eq, i, columns) => `
     <td class="text-muted number"><span class="mr-2">${i + 1}.)</span></td>
     <td>
-      <svg width="272px" height="272px" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <pattern id="smallGrid" width="30" height="30" patternUnits="userSpaceOnUse">
-            <path d="M 30 0 L 0 0 0 30" fill="none" stroke="gray" stroke-width="3" />
-          </pattern>
-        </defs>
-        <rect width="272px" height="272px" fill="url(#smallGrid)" />
-      </svg>
-      <div class="equation mt-4 mb-4">
+      <table class="grid-tbl"><tbody>${repeat(`<tr>${repeat(`<td></td>`, 8)}`, 8)}</tbody></table>
+      <div class="equation mt-2 mb-2">
         ${eq.x} &times; ${eq.y} = <input type="text" class="answer-input down"/>
       </div>
     </td>
@@ -60,6 +53,15 @@ const verticalEq = (eq, i, columns, mathSym, long, answerSpace) => `
         ${repeat(`<div class="col-${12 / eq.x} text-center">${repeat(randArr(emojis), eq.y)}</div>`, eq.x)}
       </div>
       <div class="equation mt-4 mb-4">
+        ${eq.x} &times; ${eq.y} = <input type="text" class="answer-input down"/>
+      </div>
+    </td>
+    ${((i + 1) % columns) === 0 ? '</tr><tr>' : ''}`
+  , multiAddEq = (eq, i, columns) => `
+    <td class="text-muted number"><span class="mr-2">${i + 1}.)</span></td>
+    <td class="text-center multi-vis-emoji">
+      <div class="grid"></div>
+      <div class="equation mt-2 mb-2">
         ${eq.x} &times; ${eq.y} = <input type="text" class="answer-input down"/>
       </div>
     </td>
@@ -231,6 +233,12 @@ const hwSets = {
     count: 16, columns: 2,
     xSize: 1, ySize: 1,
     outputFunc: (eq, i, columns) => visualMultiEq(eq, i, columns, 8),
+  },
+  "multiplication-add-2": {
+    title: "Muliplication Add Equations", category: "Multiplication",
+    count: 16, columns: 2,
+    xSize: 1, ySize: 1,
+    outputFunc: (eq, i, columns) => multiAddEq(eq, i, columns, 8),
   },
   "multiplication": {
     title: "Multiplication 1-digit Equations", category: "Multiplication",
