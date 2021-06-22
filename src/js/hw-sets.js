@@ -37,10 +37,10 @@ const verticalEq = (eq, i, columns, mathSym, long, answerSpace) => `
       </div>
     </td>
     ${((i + 1) % columns) === 0 ? '</tr><tr>' : ''}`
-  , visualMultiEq = (eq, i, columns) => `
+  , visualMultiEq = (eq, i, columns, size = 6) => `
     <td class="text-muted number"><span class="mr-2">${i + 1}.)</span></td>
     <td>
-      <table class="grid-tbl"><tbody>${repeat(`<tr>${repeat(`<td></td>`, 8)}`, 8)}</tbody></table>
+      <table class="grid-tbl"><tbody>${repeat(`<tr>${repeat(`<td></td>`, size)}`, size)}</tbody></table>
       <div class="equation mt-2 mb-2">
         ${eq.x} &times; ${eq.y} = <input type="text" class="answer-input down"/>
       </div>
@@ -235,7 +235,7 @@ const hwSets = {
     title: "Muliplication Visual Lvl 2 Equations", category: "Multiplication",
     count: 16, columns: 2,
     xSize: 1, ySize: 1,
-    outputFunc: (eq, i, columns) => visualMultiEq(eq, i, columns, 8),
+    outputFunc: (eq, i, columns) => visualMultiEq(eq, i, columns, 9),
   },
   "multiplication-add-1": {
     title: "Muliplication Add Equations", category: "Multiplication",

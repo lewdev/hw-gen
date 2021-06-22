@@ -1,6 +1,6 @@
 .grid-tbl > tbody > tr > td {
-  width: 25px;
-  height: 25px;
+  width: .5rem;
+  height: .5rem;
   border: 2px solid gray;
 }
 tr.example > td.multi-vis-emoji > div { width: 100% !important }
