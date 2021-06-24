@@ -117,8 +117,8 @@ const HwGen = (() => {
     }
     worksheetList.innerHTML = `<h3>Select ${data["selectedCat"]} Worksheet</h3>` +
       hwMap[data["selectedCat"]].map((hwSet, i) => {
-        const {title, xSize, ySize, mathSymbol, outputFunc, count, name, long, useAllPossible1Digit, myGenEq} = hwSet;
-        const eq = myGenEq ? myGenEq() : genEquation(xSize, ySize, mathSymbol);
+        const {title, xSize, ySize, mathSymbol, outputFunc, count, name, long, useAllPossible1Digit, myGenEq, myGenEqList} = hwSet;
+        const eq = myGenEq ? myGenEq() : myGenEqList ? myGenEqList()[0] : genEquation(xSize, ySize, mathSymbol);
         const eqStr = outputFunc(eq, -1, 0, long);
         return `${i === 0 ? '' : '<hr/>'}<div class="row">
         <div class="col-1 text-right pr-0 text-sm">

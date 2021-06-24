@@ -239,23 +239,17 @@ const hwSets = {
   },
   "multiplication-add-1": {
     title: "Muliplication Add Equations", category: "Multiplication",
-    count: 16, columns: 1,
-    myGenEq: () => {
-      const x = randArr([6,7,8,9]);
-      const y = randArr([3,4,5]);
-      const z = x * y;
-      return { x, y, z };
-    },
+    count: 16, columns: 2,
     myGenEqList: () => {
       const xList = [6,7,8,9];
-      const yList = [3,4,5];
+      const yList = [2,3,4,5];
       const eqList = [];
-      xList.forEach(x => yList.forEach( y => eqList.push({x, y, z: x * y})));
+      xList.forEach(x => yList.forEach(y => eqList.push({x, y, z: x * y})));
       eqList.sort(() => Math.random() - 0.5); //shuffle
       eqList.sort(() => Math.random() - 0.5); //shuffle
-      return eqList
+      return eqList;
     },
-    outputFunc: (eq, i, columns) => multiAddEq(eq, i, columns, 8),
+    outputFunc: (eq, i, columns) => multiAddEq(eq, i, columns),
   },
   "multiplication": {
     title: "Multiplication 1-digit Equations", category: "Multiplication",
