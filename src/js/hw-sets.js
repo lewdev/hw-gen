@@ -69,6 +69,18 @@ const verticalEq = (eq, i, columns, mathSym, long, answerSpace) => `
       </div>
     </td>
     ${((i + 1) % columns) === 0 ? '</tr><tr>' : ''}`
+  , multiAddEq2 = (eq, i, columns) => `
+    <td class="text-muted number"><span class="mr-2">${i + 1}.)</span></td>
+    <td>
+      <div class="text-nowrap">
+        ${repeat(`+ <input type="text" class="answer-input down"/>`, eq.y).substr(2)}
+      </div>
+      <div style="height: 30rem;"></div>
+      <div class="equation mt-4 mb-2">
+        ${eq.x} &times; ${eq.y} = <input type="text" class="answer-input down"/>
+      </div>
+    </td>
+    ${((i + 1) % columns) === 0 ? '</tr><tr>' : ''}`
   , visualAddition = (eq, i, columns, mathSym, emoji) => `
     <td rowspan="2" style="height: 10rem;"><div class="number" style="height: 12rem;">${i + 1}.)</div></td>
     <td class="text-center align-middle">${strXTimes(`<span class="emoji mr-2 text-lg">${emoji}</span>`, eq.x)}</td>
@@ -238,7 +250,7 @@ const hwSets = {
     outputFunc: (eq, i, columns) => visualMultiEq(eq, i, columns, 9),
   },
   "multiplication-add-1": {
-    title: "Muliplication Add Equations", category: "Multiplication",
+    title: "Muliplication Add Equations 1", category: "Multiplication",
     count: 16, columns: 2,
     myGenEqList: () => {
       const xList = [6,7,8,9];
@@ -250,6 +262,20 @@ const hwSets = {
       return eqList;
     },
     outputFunc: (eq, i, columns) => multiAddEq(eq, i, columns),
+  },
+  "multiplication-add-2": {
+    title: "Muliplication Add Equations 2", category: "Multiplication",
+    count: 16, columns: 2,
+    myGenEqList: () => {
+      const xList = [6,7,8,9];
+      const yList = [6,7,8,9];
+      const eqList = [];
+      xList.forEach(x => yList.forEach(y => eqList.push({x, y, z: x * y})));
+      eqList.sort(() => Math.random() - 0.5); //shuffle
+      eqList.sort(() => Math.random() - 0.5); //shuffle
+      return eqList;
+    },
+    outputFunc: (eq, i, columns) => multiAddEq2(eq, i, columns),
   },
   "multiplication": {
     title: "Multiplication 1-digit Equations", category: "Multiplication",
