@@ -213,6 +213,7 @@ const HwGen = (() => {
       data['selectedCat'] = hwSets[hwSetName].category;
       data['mode'] = MODE.PRINT_CONFIG;
     }
+    worksheetCountSelect.innerHTML = new Array(29).fill().map((_, i) => `<option>${i + 1}</option>`).join("");
     //map sets by Category.
     Object.keys(hwSets).map(a => {
       const hwSet = hwSets[a];
