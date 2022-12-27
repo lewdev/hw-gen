@@ -88,6 +88,7 @@ const HwGen = (() => {
       case 'Subtraction': return '➖';
       case 'Multiplication': return '✖';
       case 'Division': return '➗';
+      case 'Japanese': return '🇯🇵';
     }
     return '🔢';
   };
@@ -126,7 +127,7 @@ const HwGen = (() => {
         </div>
         <div class="col-md-5">
           <a href="./?set=${name}" onclick="HwGen.setWs('${name}'); return false;">${title}</a>
-          <div>${useAllPossible1Digit ? 64 : count} Problems</div>
+          <div>${(useAllPossible1Digit ? 64 : myGenEqList ? myGenEqList().length : count || 0)} Problems</div>
           ${answerKey ? '<div class="text-muted">w/answer key</div>' : ''}
         </div>
         <div class="col-1">e.g.</div>

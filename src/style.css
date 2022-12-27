@@ -114,6 +114,14 @@ tr.long > td > div.vert-equation > .answer-input { width: 10rem; }
   border-bottom: 3px solid black;
   text-align: center;
 }
+.answer-input.box {
+  border: 3px solid black;
+  text-align: center;
+  width: 10rem;
+  height: 10rem;
+  margin: 0 auto;
+  display: block;
+}
 .answer-key-table { font-size: 16px; border: 1px solid gray; }
 .answer-key { width: 5rem; display: inline-block; }
 /* .worksheets-view-panel { margin-top: -1rem; } */

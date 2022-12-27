@@ -120,7 +120,7 @@ const hwSets = {
     title: "Addition 1-digit Equations", category: "Addition",
     columns: 4,
     useAllPossible1Digit: true,
-    xSize: 1, ySize: 1,
+    xSize: 1, ySize: 1, //number of digits in x & y.
     mathSymbol: "+",
     outputFunc: (eq, i, columns) => horizontalEq(eq, i, columns, "+"),
   },
